@@ -24,10 +24,19 @@ struct GameView: View {
     ]
     
     var body: some View {
+        
         TabView {
             // Вкладка 1
             NavigationView {
-                VStack {
+                RadialGradient(
+                            gradient: Gradient(colors: [Color.red, Color.purple]),
+                            center: .center,
+                            startRadius: 0,
+                            endRadius: 500
+                        )
+                        .edgesIgnoringSafeArea(.all)
+                        .overlay(      
+                            VStack {
                     Spacer()
                     
                     Text("Time remaining: \(timeRemaining) sec.")
@@ -77,6 +86,7 @@ struct GameView: View {
                         Image(systemName: "arrow.2.squarepath")
                     }
                 )
+                )
             }
             .tabItem {
                 Image(systemName: "1.circle")
@@ -85,6 +95,14 @@ struct GameView: View {
 
             // Вкладка 2
             NavigationView {
+                RadialGradient(
+                            gradient: Gradient(colors: [Color.red, Color.purple]),
+                            center: .center,
+                            startRadius: 0,
+                            endRadius: 500
+                        )
+                        .edgesIgnoringSafeArea(.all)
+                        .overlay(
                 VStack {
                     Spacer()
 
@@ -95,7 +113,9 @@ struct GameView: View {
                     Spacer()
                 }
                 .navigationBarTitle("Score", displayMode: .inline)
+                )
             }
+                
             .tabItem {
                 Image(systemName: "2.circle")
                 Text("Score")
