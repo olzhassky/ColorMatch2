@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var showAlert = false
     @State private var newColors: [Color] = []
+
     let columns: [GridItem] = [
         GridItem(.fixed(70), spacing: nil, alignment: nil),
         GridItem(.fixed(70), spacing: nil, alignment: nil),
@@ -23,10 +24,8 @@ struct ContentView: View {
                     Rectangle()
                         .frame(height: 70)
                         .foregroundColor(newColors[index])
-                
                 }
             }
-            .navigationBarTitle("Random Color", displayMode: .large)
             .navigationBarTitle("ColorMatch", displayMode: .inline)
             .navigationBarItems(
                 trailing: Button(action: {
@@ -39,7 +38,6 @@ struct ContentView: View {
                 Alert(title: Text("Вы уверены?"), message: Text("Начать игру заново"), primaryButton: .destructive(Text("Да")) {
                 }, secondaryButton: .cancel())
             }
-
         }
         Button("Random") {
             generateColors()
@@ -70,14 +68,16 @@ struct ContentView: View {
         colors.shuffle()
         newColors = colors
         }
-    
 }
 
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}
+#Preview {
+    ContentView()
 }
 
 
