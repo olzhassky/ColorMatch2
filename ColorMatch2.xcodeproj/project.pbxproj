@@ -8,17 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		638D71272AC8793400515187 /* ColorMatch2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638D71262AC8793400515187 /* ColorMatch2App.swift */; };
-		638D71292AC8793400515187 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638D71282AC8793400515187 /* ContentView.swift */; };
+		638D71292AC8793400515187 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638D71282AC8793400515187 /* GameView.swift */; };
 		638D712B2AC8793600515187 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 638D712A2AC8793600515187 /* Assets.xcassets */; };
 		638D712E2AC8793600515187 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 638D712D2AC8793600515187 /* Preview Assets.xcassets */; };
+		CA0C66152AD128C700DB99EA /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0C66142AD128C700DB99EA /* ButtonStyles.swift */; };
+		CA0C66192AD1293500DB99EA /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0C66182AD1293500DB99EA /* GameLogic.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		638D71232AC8793400515187 /* ColorMatch2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorMatch2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		638D71262AC8793400515187 /* ColorMatch2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorMatch2App.swift; sourceTree = "<group>"; };
-		638D71282AC8793400515187 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		638D71282AC8793400515187 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		638D712A2AC8793600515187 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		638D712D2AC8793600515187 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		CA0C66142AD128C700DB99EA /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
+		CA0C66182AD1293500DB99EA /* GameLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +56,9 @@
 			isa = PBXGroup;
 			children = (
 				638D71262AC8793400515187 /* ColorMatch2App.swift */,
-				638D71282AC8793400515187 /* ContentView.swift */,
+				CA0C661A2AD1294300DB99EA /* Services */,
+				CA0C66172AD128FD00DB99EA /* Views */,
+				CA0C66162AD128F500DB99EA /* Styles */,
 				638D712A2AC8793600515187 /* Assets.xcassets */,
 				638D712C2AC8793600515187 /* Preview Content */,
 			);
@@ -65,6 +71,30 @@
 				638D712D2AC8793600515187 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		CA0C66162AD128F500DB99EA /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				CA0C66142AD128C700DB99EA /* ButtonStyles.swift */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
+		CA0C66172AD128FD00DB99EA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				638D71282AC8793400515187 /* GameView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		CA0C661A2AD1294300DB99EA /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				CA0C66182AD1293500DB99EA /* GameLogic.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +167,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				638D71292AC8793400515187 /* ContentView.swift in Sources */,
+				638D71292AC8793400515187 /* GameView.swift in Sources */,
+				CA0C66192AD1293500DB99EA /* GameLogic.swift in Sources */,
+				CA0C66152AD128C700DB99EA /* ButtonStyles.swift in Sources */,
 				638D71272AC8793400515187 /* ColorMatch2App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

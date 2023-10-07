@@ -11,7 +11,7 @@ import SwiftUI
 struct ColorMatch2App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            GameView()
         }
     }
 }
