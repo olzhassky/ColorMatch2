@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    @State private var showAlert = false
+struct GameView: View {
+    @State private var showRestartAlert = false
     @State private var showGameOverAlert = false
     
-    @State private var newColors: [Color] = []
+    @ObservedObject var gameLogic = GameLogic()
     @State var timeRemaining = 15
     
     @State var isTapped = false
@@ -37,16 +37,16 @@ struct ContentView: View {
                 Spacer()
                 
                 LazyVGrid(columns: columns) {
-                    ForEach(0 ..< newColors.count, id: \.self) { index in
+                    ForEach(0 ..< gameLogic.colors.count, id: \.self) { index in
                         Button(action: {
                             
                         }, label: {
                             Spacer()
                         })
-                        .buttonStyle(ColorButtonStyle(backgroundColor: newColors[index]))
+                        .buttonStyle(ColorButtonStyle(backgroundColor: gameLogic.colors[index]))
                     }
                 }
-                .alert(isPresented: $showAlert) {
+                .alert(isPresented: $showRestartAlert) {
                     Alert(title: Text("Вы уверены?"), message: Text("Начать игру заново"), primaryButton: .destructive(Text("Да")) {
                     }, secondaryButton: .cancel())
                 }
@@ -55,14 +55,14 @@ struct ContentView: View {
                           message: Text("Игра начнется заново!"),
                           dismissButton: .destructive(Text("Окей")) {
                         timeRemaining = 30
-                        generateColors()
+                        gameLogic.generateColors()
                     })
                 }
                 
                 Spacer()
                 
                 Button("Random") {
-                    generateColors()
+                    gameLogic.generateColors()
                 }
                 .buttonStyle(.bordered)
                 
@@ -71,14 +71,14 @@ struct ContentView: View {
             .navigationBarTitle("ColorMatch", displayMode: .inline)
             .navigationBarItems(
                 trailing: Button(action: {
-                    self.showAlert.toggle()
+                    self.showRestartAlert = true
                 }) {
-                    Text("Рестарт")
+                    Image(systemName: "arrow.2.squarepath")
                 }
             )
         }
         .onAppear {
-            generateColors()
+            gameLogic.generateColors()
         }
         .onReceive(timer) { _ in
             if timeRemaining > 0 {
@@ -92,44 +92,8 @@ struct ContentView: View {
     func presentGameOver() {
         showGameOverAlert = true
     }
-    
-    func generateColors() {
-        var colors: [Color] = []
-        for _ in 0 ..< 14 {
-            let randomColor = Color (
-                red: Double.random(in: 0...1),
-                green: Double.random(in: 0...1),
-                blue: Double.random(in: 0...1)
-            )
-            colors.append(randomColor)
-        }
-        let duplicatedColor = Color(
-            red: Double.random(in: 0...1),
-            green: Double.random(in: 0...1),
-            blue: Double.random(in: 0...1)
-        )
-        colors.append(duplicatedColor)
-        colors.append(duplicatedColor)
-        print(duplicatedColor)
-        colors.shuffle()
-        newColors = colors
-    }
 }
 
 #Preview {
-    ContentView()
-}
-
-
-struct ColorButtonStyle: ButtonStyle {
-    var backgroundColor: Color
-    func makeBody(configuration: Configuration) -> some View {
-        configuration
-            .label
-            .padding()
-            .frame(width: 70, height: 70)
-            .background(backgroundColor)
-            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 8, height: 8)))
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
-    }
+    GameView()
 }
