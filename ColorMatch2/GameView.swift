@@ -8,14 +8,12 @@
 import SwiftUI
 
 struct GameView: View {
-    @State private var showRestartAlert = false
-    @State private var showGameOverAlert = false
-    
     @ObservedObject var gameLogic = GameLogic()
-    @State var timeRemaining = 15
+    @State var isTapped = false
     
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
+    @State var firstSelectedColor: Color? = nil
+    @State var secondSelectedColor: Color? = nil
+
     let columns: [GridItem] = [
         GridItem(.fixed(70), spacing: nil, alignment: nil),
         GridItem(.fixed(70), spacing: nil, alignment: nil),
@@ -35,43 +33,60 @@ struct GameView: View {
                             endRadius: 500
                         )
                         .edgesIgnoringSafeArea(.all)
-                        .overlay(      
+                        .overlay(
                             VStack {
                     Spacer()
                     
-                    Text("Time remaining: \(timeRemaining) sec.")
+                                Text("Time remaining: \(gameLogic.timeRemaining) sec.")
                         .font(.callout)
                         .bold()
                     
+                    Spacer()
+                                Text("Score \(gameLogic.score)")
+                                
                     Spacer()
                     
                     LazyVGrid(columns: columns) {
                         ForEach(0 ..< gameLogic.colors.count, id: \.self) { index in
                             Button(action: {
-                                
+                                if firstSelectedColor == nil {
+                                    firstSelectedColor = gameLogic.colors[index]
+                                } else if secondSelectedColor == nil {
+                                    secondSelectedColor = gameLogic.colors[index]
+                                    if firstSelectedColor == secondSelectedColor {
+                                        gameLogic.score += 1
+                                        if gameLogic.score >= gameLogic.currentRound {
+                                            gameLogic.startNextRound()
+                                        }
+                                    } else {
+                                        gameLogic.showGameOverAlert = true
+                                    }
+                                    firstSelectedColor = nil
+                                    secondSelectedColor = nil
+                                }
                             }, label: {
                                 Spacer()
                             })
                             .buttonStyle(ColorButtonStyle(backgroundColor: gameLogic.colors[index]))
                         }
                     }
-                    .alert(isPresented: $showRestartAlert) {
+                    .alert(isPresented: $gameLogic.showRestartAlert) {
                         Alert(title: Text("Вы уверены?"), message: Text("Начать игру заново"), primaryButton: .destructive(Text("Да")) {
                         }, secondaryButton: .cancel())
                     }
-                    .alert(isPresented: $showGameOverAlert) {
+                    .alert(isPresented: $gameLogic.showGameOverAlert) {
                         Alert(title: Text("Вы проиграли"),
                               message: Text("Игра начнется заново!"),
                               dismissButton: .destructive(Text("Окей")) {
-                            timeRemaining = 30
-                            gameLogic.generateColors()
+                            gameLogic.startGame()
                         })
                     }
                     
                     Spacer()
                     
-                    Button("Random") {
-                        gameLogic.generateColors()
+                                Button("Start") {
+                                    gameLogic.startGame()
+                                    gameLogic.isGameStart = true
                     }
                     .buttonStyle(.bordered)
                     
@@ -81,7 +96,7 @@ struct GameView: View {
                 .navigationBarTitle("ColorMatch", displayMode: .inline)
                 .navigationBarItems(
                     trailing: Button(action: {
-                        self.showRestartAlert = true
+                        self.gameLogic.showRestartAlert = true
                     }) {
                         Image(systemName: "arrow.2.squarepath")
                     }
@@ -121,15 +136,14 @@ struct GameView: View {
                 Text("Score")
             }
         }
+        .onAppear {
+            gameLogic.generateColors()
+        }
+    }
+
     }
 
 
-
-    
-    func presentGameOver() {
-        showGameOverAlert = true
-    }
-}
 
 #Preview {
     GameView()

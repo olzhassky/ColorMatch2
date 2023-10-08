@@ -9,6 +9,15 @@ import SwiftUI
 
 class GameLogic: ObservableObject {
     @Published var colors: [Color] = []
+    @Published var score = 0
+    @Published var timeRemaining = 0
+    @Published  var showRestartAlert = false
+    @Published var showGameOverAlert = false
+    
+    @Published var isGameStart = false
+
+    @Published var currentRound: Int = 1
+    var timer: Timer?
     
     init() {
         generateColors()
@@ -33,5 +42,38 @@ class GameLogic: ObservableObject {
         colors.append(duplicatedColor)
         
         self.colors = colors.shuffled()
+    }
+    func startGame() {
+        score = 0
+        timeRemaining = 30
+        generateColors()
+        startTimer()
+        
+    }
+    func startNextRound() {
+        stopTimer()
+        currentRound += 1
+        generateColors()
+        timeRemaining = 30
+        startTimer()
+
+    }
+    func startTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            if self.timeRemaining > 0 {
+                self.timeRemaining -= 1
+            } else {
+                self.stopTimer()
+                self.presentGameOver()
+            }
+        }
+    }
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+    func presentGameOver() {
+        showGameOverAlert = true
     }
 }
