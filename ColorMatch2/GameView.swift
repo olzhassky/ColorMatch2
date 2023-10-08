@@ -22,81 +22,126 @@ struct GameView: View {
     ]
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                Spacer()
-                
-                Text("Time remaining: \(gameLogic.timeRemaining) sec.")
-                    .font(.callout)
-                    .bold()
-                
-                Spacer()
-                
-                Text("Score \(gameLogic.score)")
-                
-                Spacer()
-                
-                LazyVGrid(columns: columns) {
-                    ForEach(0 ..< gameLogic.colors.count, id: \.self) { index in
-                        Button(action: {
-                            if firstSelectedColor == nil {
-                                firstSelectedColor = gameLogic.colors[index]
-                            } else if secondSelectedColor == nil {
-                                secondSelectedColor = gameLogic.colors[index]
-                                if firstSelectedColor == secondSelectedColor {
-                                    gameLogic.score += 1
-                                    if gameLogic.score >= gameLogic.currentRound {
-                                        gameLogic.startNextRound()
+        TabView {
+            // Вкладка 1
+            NavigationView {
+                RadialGradient(
+                            gradient: Gradient(colors: [Color.red, Color.purple]),
+                            center: .center,
+                            startRadius: 0,
+                            endRadius: 500
+                        )
+                        .edgesIgnoringSafeArea(.all)
+                        .overlay(
+                            VStack {
+                    Spacer()
+                    
+                                Text("Time remaining: \(gameLogic.timeRemaining) sec.")
+                        .font(.callout)
+                        .bold()
+                    
+                    Spacer()
+                                Text("Score \(gameLogic.score)")
+                                
+                    Spacer()
+                    
+                    LazyVGrid(columns: columns) {
+                        ForEach(0 ..< gameLogic.colors.count, id: \.self) { index in
+                            Button(action: {
+                                if firstSelectedColor == nil {
+                                    firstSelectedColor = gameLogic.colors[index]
+                                } else if secondSelectedColor == nil {
+                                    secondSelectedColor = gameLogic.colors[index]
+                                    if firstSelectedColor == secondSelectedColor {
+                                        gameLogic.score += 1
+                                        if gameLogic.score >= gameLogic.currentRound {
+                                            gameLogic.startNextRound()
+                                        }
+                                    } else {
+                                        gameLogic.showGameOverAlert = true
                                     }
-                                } else {
-                                    gameLogic.showGameOverAlert = true
+                                    firstSelectedColor = nil
+                                    secondSelectedColor = nil
                                 }
-                                firstSelectedColor = nil
-                                secondSelectedColor = nil
-                            }
-                        }, label: {
-                            Spacer()
-                        })
-                        .buttonStyle(ColorButtonStyle(backgroundColor: gameLogic.colors[index]))
+                            }, label: {
+                                Spacer()
+                            })
+                            .buttonStyle(ColorButtonStyle(backgroundColor: gameLogic.colors[index]))
+                        }
                     }
-                }
-                .alert(isPresented: $gameLogic.showRestartAlert) {
-                    Alert(title: Text("Вы уверены?"), message: Text("Начать игру заново"), primaryButton: .destructive(Text("Да")) {
-                    }, secondaryButton: .cancel())
-                }
-                .alert(isPresented: $gameLogic.showGameOverAlert) {
-                    Alert(title: Text("Вы проиграли"),
-                          message: Text("Игра начнется заново!"),
-                          dismissButton: .destructive(Text("Окей")) {
-                        gameLogic.startGame()
-                    })
+                    .alert(isPresented: $gameLogic.showRestartAlert) {
+                        Alert(title: Text("Вы уверены?"), message: Text("Начать игру заново"), primaryButton: .destructive(Text("Да")) {
+                        }, secondaryButton: .cancel())
+                    }
+                    .alert(isPresented: $gameLogic.showGameOverAlert) {
+                        Alert(title: Text("Вы проиграли"),
+                              message: Text("Игра начнется заново!"),
+                              dismissButton: .destructive(Text("Окей")) {
+                            gameLogic.startGame()
+                        })
+                    }
+                    
+                    Spacer()
+                    
+                                Button("Start") {
+                                    gameLogic.startGame()
+                                    gameLogic.isGameStart = true
+                    }
+                    .buttonStyle(.bordered)
+                    
+                    Spacer()
                 }
                 
-                Spacer()
-                
-                Button("Start") {
-                    gameLogic.startGame()
-                    gameLogic.isGameStart = true
-                }
-                .buttonStyle(.bordered)
-               // .opacity(gameLogic.isGameStart ? 0 : 1)
-                
-                Spacer()
+                .navigationBarTitle("ColorMatch", displayMode: .inline)
+                .navigationBarItems(
+                    trailing: Button(action: {
+                        self.gameLogic.showRestartAlert = true
+                    }) {
+                        Image(systemName: "arrow.2.squarepath")
+                    }
+                )
+                )
             }
-            .navigationBarTitle("ColorMatch", displayMode: .inline)
-            .navigationBarItems(
-                trailing: Button(action: {
-                    self.gameLogic.showRestartAlert = true
-                }) {
-                    Image(systemName: "arrow.2.squarepath")
+            .tabItem {
+                Image(systemName: "1.circle")
+                Text("Game")
+            }
+
+            // Вкладка 2
+            NavigationView {
+                RadialGradient(
+                            gradient: Gradient(colors: [Color.red, Color.purple]),
+                            center: .center,
+                            startRadius: 0,
+                            endRadius: 500
+                        )
+                        .edgesIgnoringSafeArea(.all)
+                        .overlay(
+                VStack {
+                    Spacer()
+
+                    Text("Табличка с рекордами")
+                        .font(.callout)
+                        .bold()
+
+                    Spacer()
                 }
-            )
+                .navigationBarTitle("Score", displayMode: .inline)
+                )
+            }
+                
+            .tabItem {
+                Image(systemName: "2.circle")
+                Text("Score")
+            }
         }
         .onAppear {
             gameLogic.generateColors()
         }
     }
-}
+
+    }
+
 
 
 #Preview {
