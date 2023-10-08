@@ -13,6 +13,9 @@ struct GameView: View {
     
     @State var firstSelectedColor: Color? = nil
     @State var secondSelectedColor: Color? = nil
+    
+    
+    @State private var playerName: String = ""
 
     let columns: [GridItem] = [
         GridItem(.fixed(70), spacing: nil, alignment: nil),
@@ -124,7 +127,15 @@ struct GameView: View {
                     Text("Табличка с рекордами")
                         .font(.callout)
                         .bold()
-
+                    
+                    List(gameLogic.gameRecords) { record in
+                        HStack {
+                            Text(record.playerName)
+                            Spacer()
+                            Text("\(record.score) очков")
+                        }
+                    }
+                    
                     Spacer()
                 }
                 .navigationBarTitle("Score", displayMode: .inline)
@@ -140,6 +151,8 @@ struct GameView: View {
             gameLogic.generateColors()
         }
     }
+//    gameLogic.addRecord(playerName: playerName, score: gameLogic.score)
+
 
     }
 
