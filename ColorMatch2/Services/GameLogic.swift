@@ -79,10 +79,12 @@ class GameLogic: ObservableObject {
             }
         }
     }
+    
     func stopTimer() {
         timer?.invalidate()
         timer = nil
     }
+    
     func presentGameOver() {
         showGameOverAlert = true
     }
