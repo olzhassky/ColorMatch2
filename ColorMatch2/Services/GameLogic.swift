@@ -91,5 +91,11 @@ class GameLogic: ObservableObject {
     func addRecord(playerName: String, score: Int) {
            let record = GameRecord(playerName: playerName, score: score)
            gameRecords.append(record)
+           saveGameRecords()
        }
+    
+    private func saveGameRecords() {
+//            код для сохр рекордов
+        }
+    
 }

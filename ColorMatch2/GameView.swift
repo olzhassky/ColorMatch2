@@ -107,7 +107,7 @@ struct GameView: View {
                 )
             }
             .tabItem {
-                Image(systemName: "1.circle")
+                Image(systemName: "gamecontroller")
                 Text("Game")
             }
 
@@ -135,25 +135,37 @@ struct GameView: View {
                             Text("\(record.score) очков")
                         }
                     }
+             
+                       
+                    
+                    
+                    Spacer()
+                    TextField("Напиши свое имя", text: $playerName)
+                        .padding()
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    
+                    Button("Добавить") {
+                        gameLogic.addRecord(playerName: playerName, score: gameLogic.score)
+                    }
+                    .buttonStyle(.bordered)
                     
                     Spacer()
                 }
                 .navigationBarTitle("Score", displayMode: .inline)
                 )
             }
-                
             .tabItem {
-                Image(systemName: "2.circle")
+                Image(systemName: "flag.2.crossed.fill")
                 Text("Score")
+                
             }
+            .foregroundColor(.black)
         }
+        .foregroundColor(.black)
         .onAppear {
             gameLogic.generateColors()
         }
     }
-//    gameLogic.addRecord(playerName: playerName, score: gameLogic.score)
-
-
     }
 
 
