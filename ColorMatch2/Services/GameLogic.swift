@@ -7,7 +7,17 @@
 
 import SwiftUI
 
+// для таблицы с рекордами
+struct GameRecord: Identifiable {
+    var id = UUID()
+    var playerName: String
+    var score: Int
+}
+
 class GameLogic: ObservableObject {
+    // для таблицы с рекордами
+    @Published var gameRecords: [GameRecord] = []
+    
     @Published var colors: [Color] = []
     @Published var score = 0
     @Published var timeRemaining = 0
@@ -69,11 +79,25 @@ class GameLogic: ObservableObject {
             }
         }
     }
+    
     func stopTimer() {
         timer?.invalidate()
         timer = nil
     }
+    
     func presentGameOver() {
         showGameOverAlert = true
     }
+    
+//    для таблицы с рекордами
+    func addRecord(playerName: String, score: Int) {
+           let record = GameRecord(playerName: playerName, score: score)
+           gameRecords.append(record)
+           saveGameRecords()
+       }
+    
+    private func saveGameRecords() {
+//            код для сохр рекордов
+        }
+    
 }
