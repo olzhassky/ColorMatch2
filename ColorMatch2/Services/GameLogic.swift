@@ -6,13 +6,22 @@
 //
 
 import SwiftUI
+import SwiftData
 
 // для таблицы с рекордами
-struct GameRecord: Identifiable {
+@Model
+class GameRecord: Identifiable {
     var id = UUID()
     var playerName: String
     var score: Int
+    
+    init(id: UUID = UUID(), playerName: String, score: Int) {
+        self.id = id
+        self.playerName = playerName
+        self.score = score
+    }
 }
+
 
 class GameLogic: ObservableObject {
     // для таблицы с рекордами

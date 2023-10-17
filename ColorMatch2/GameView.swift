@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct NameInputView: View {
+    
     @Binding var isPresented: Bool
     @Binding var playerNameInput: String
     
@@ -26,6 +28,10 @@ struct NameInputView: View {
 }
 
 struct GameView: View {
+    @State private var gameRecords: [GameRecord] = []
+    
+    @Environment(\.modelContext) private var modelContext
+    
     @ObservedObject var gameLogic = GameLogic()
     @State var isTapped = false
     
@@ -112,15 +118,13 @@ struct GameView: View {
                             NameInputView(isPresented: $isNameInputViewPresented, playerNameInput: $playerNameInput)
                                 .onDisappear {
                                     let record = GameRecord(playerName: playerNameInput, score: gameLogic.score)
-                                    gameLogic.gameRecords.append(record)
+                                    gameRecords.append(record)
                                     gameLogic.startGame()
                                 }
-                            
-                            
                         }
+
                         
                         .buttonStyle(.bordered)
-                        
                         Spacer()
                     }
                     
@@ -156,13 +160,17 @@ struct GameView: View {
                             .font(.callout)
                             .bold()
                         
-                        List(gameLogic.gameRecords) { record in
-                            HStack {
-                                Text(record.playerName)
-                                Spacer()
-                                Text("\(record.score) очков")
-                            }
-                        }
+                        List {
+                                    ForEach(gameRecords) { record in
+                                        HStack {
+                                            Text(record.playerName)
+                                            Spacer()
+                                            Text("\(record.score) очков")
+                                        }
+                                    }
+                                    .onDelete(perform: delete)
+                                }
+                            
                         Spacer()
                         
                     }
@@ -183,10 +191,24 @@ struct GameView: View {
     }
 }
 
-
-
-
-
+private extension GameView {
+    func submit() {
+        modelContext.insert(GameRecord(playerName: playerNameInput, score: gameLogic.score))
+        
+    }
+    
+    
+    func delete(at offsets: IndexSet) {
+        func delete(at offsets: IndexSet) {
+            for index in offsets {
+                modelContext.delete(gameRecords[index])
+            }
+        }
+        
+        
+    }
+    
+}
 #Preview {
     GameView()
 }

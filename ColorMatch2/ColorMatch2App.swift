@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct ColorMatch2App: App {
     var body: some Scene {
         WindowGroup {
             GameView()
+                .modelContainer(for: GameRecord.self)
         }
     }
 }
