@@ -69,6 +69,8 @@ class GameLogic: ObservableObject {
 
     }
     func startTimer() {
+        guard timer == nil else { return }
+
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             guard let self = self else { return }
             if self.timeRemaining > 0 {
