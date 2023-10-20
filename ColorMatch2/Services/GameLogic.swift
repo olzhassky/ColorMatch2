@@ -6,13 +6,22 @@
 //
 
 import SwiftUI
+import Combine
 
 // для таблицы с рекордами
-struct GameRecord: Identifiable {
+
+class GameRecord: Identifiable, Codable {
     var id = UUID()
     var playerName: String
     var score: Int
+    
+    init(id: UUID = UUID(), playerName: String, score: Int) {
+        self.id = id
+        self.playerName = playerName
+        self.score = score
+    }
 }
+
 
 class GameLogic: ObservableObject {
     // для таблицы с рекордами
@@ -25,7 +34,7 @@ class GameLogic: ObservableObject {
     @Published var showGameOverAlert = false
     
     @Published var isGameStart = false
-
+    
     @Published var currentRound: Int = 1
     var timer: Timer?
     
@@ -66,11 +75,11 @@ class GameLogic: ObservableObject {
         generateColors()
         timeRemaining = 30
         startTimer()
-
+        
     }
     func startTimer() {
         guard timer == nil else { return }
-
+        
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             guard let self = self else { return }
             if self.timeRemaining > 0 {
@@ -91,15 +100,22 @@ class GameLogic: ObservableObject {
         showGameOverAlert = true
     }
     
-//    для таблицы с рекордами
+    //    для таблицы с рекордами
     func addRecord(playerName: String, score: Int) {
-           let record = GameRecord(playerName: playerName, score: score)
-           gameRecords.append(record)
-           saveGameRecords()
-       }
+        let record = GameRecord(playerName: playerName, score: score)
+        gameRecords.append(record)
+        saveGameRecords()
+    }
     
-    private func saveGameRecords() {
-//            код для сохр рекордов
+    func saveGameRecords() {
+        //            код для сохр рекордов
+        func saveGameRecords() {
+            do {
+                let data = try JSONEncoder().encode(gameRecords)
+                UserDefaults.standard.set(data, forKey: "gameRecords")
+            } catch {
+                print("Error encoding game records: \(error)")
+            }
         }
-    
+    }
 }

@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import Combine
+
 
 struct NameInputView: View {
+    
     @Binding var isPresented: Bool
     @Binding var playerNameInput: String
     
@@ -19,6 +22,8 @@ struct NameInputView: View {
             
             Button("OK") {
                 isPresented = false
+                UserDefaults.standard.set(playerNameInput, forKey: "playerName")
+                
             }
             .padding()
         }
@@ -26,6 +31,8 @@ struct NameInputView: View {
 }
 
 struct GameView: View {
+    @State private var gameRecords: [GameRecord] = []
+    
     @ObservedObject var gameLogic = GameLogic()
     @State var isTapped = false
     
@@ -34,6 +41,16 @@ struct GameView: View {
     
     @State private var playerNameInput: String = ""
     @State private var isNameInputViewPresented: Bool = false
+    
+    @State private var isInfoViewPresented = false
+    
+    @State private var isSheetPresented = false
+    //    переменные для анимации
+    @State private var ellipseOneWidth: CGFloat = 400
+    @State private var ellipseOneHeight: CGFloat = 300
+    @State private var ellipseTwoWidth: CGFloat = 0
+    @State private var ellipseTwoHeight: CGFloat = 0
+    
     
     let columns: [GridItem] = [
         GridItem(.fixed(70), spacing: nil, alignment: nil),
@@ -56,16 +73,17 @@ struct GameView: View {
                 .edgesIgnoringSafeArea(.all)
                 .overlay(
                     VStack {
-                        Spacer()
                         
-                        Text("Time remaining: \(gameLogic.timeRemaining) sec.")
-                            .font(.callout)
+                        Text(" \(gameLogic.timeRemaining) sec.")
+                            .font(.system(size: 46))
                             .bold()
+                            .frame(width: ellipseOneWidth, height: ellipseOneHeight,
+                                   alignment: .center)
+                            .animation(Animation
+                                .easeInOut(duration: 1.5))
                         
-                        Spacer()
-                        Text("Score \(gameLogic.score)")
-                        
-                        Spacer()
+                        Text("Score: \(gameLogic.score)")
+                            .font(.system(size: 26))
                         
                         LazyVGrid(columns: columns) {
                             ForEach(0 ..< gameLogic.colors.count, id: \.self) { index in
@@ -86,53 +104,63 @@ struct GameView: View {
                                         secondSelectedColor = nil
                                     }
                                 }, label: {
+                                    
                                     Spacer()
                                 })
                                 .buttonStyle(ColorButtonStyle(backgroundColor: gameLogic.colors[index]))
                             }
                         }
-                        .alert(isPresented: $gameLogic.showRestartAlert) {
-                            Alert(title: Text("Вы уверены?"), message: Text("Начать игру заново"), primaryButton: .destructive(Text("Да")) {
-                            }, secondaryButton: .cancel())
-                        }
-                        .alert(isPresented: $gameLogic.showGameOverAlert) {
-                            Alert(title: Text("Вы проиграли"),
-                                  message: Text("Игра начнется заново!"),
-                                  dismissButton: .destructive(Text("Окей")) {
-                                gameLogic.startGame()
-                            })
-                        }
+                        //                        пока не нужный код с алертом рестарта
+                        //                        .alert(isPresented: $gameLogic.showRestartAlert) {
+                        //                            Alert(title: Text("Вы уверены?"), message: Text("Начать игру заново"), primaryButton: .destructive(Text("Да")) {
+                        //                            }, secondaryButton: .cancel())
+                        //                        }
+                        //                        .alert(isPresented: $gameLogic.showGameOverAlert) {
+                        //                            Alert(title: Text("Вы проиграли"),
+                        //                                  message: Text("Игра начнется заново!"),
+                        //                                  dismissButton: .destructive(Text("Окей")) {
+                        //                                gameLogic.startGame()
+                        //                            })
+                        //                        }
                         
-                        Spacer()
                         
-                        Button("Start") {
-                            isNameInputViewPresented = true
-                        }
-                        .sheet(isPresented: $isNameInputViewPresented) {
-                            NameInputView(isPresented: $isNameInputViewPresented, playerNameInput: $playerNameInput)
-                                .onDisappear {
-                                    let record = GameRecord(playerName: playerNameInput, score: gameLogic.score)
-                                    gameLogic.gameRecords.append(record)
-                                    gameLogic.startGame()
-                                }
-                            
-                            
-                        }
-                        
-                        .buttonStyle(.bordered)
-                        
-                        Spacer()
                     }
                     
                         .navigationBarTitle("ColorMatch", displayMode: .inline)
+                    
                         .navigationBarItems(
-                            trailing: Button(action: {
-                                self.gameLogic.showRestartAlert = true
-                            }) {
-                                Image(systemName: "arrow.2.squarepath")
-                            }
+                            leading:
+                                HStack {
+                                    NavigationLink(destination: InfoView()) {
+                                        Image(systemName: "info.circle")
+                                            .font(.title)
+                                    }
+                                },
+                            trailing:
+                                HStack {
+                                    Button {
+                                        isNameInputViewPresented = true
+                                    } label: {
+                                        Image(systemName: "play.fill")
+                                            .font(.title)
+                                    }
+                                    .sheet(isPresented: $isNameInputViewPresented) {
+                                        NameInputView(isPresented: $isNameInputViewPresented, playerNameInput: $playerNameInput)
+                                            .onDisappear {
+                                                let record = GameRecord(playerName: playerNameInput, score: gameLogic.score)
+                                                gameRecords.append(record)
+                                                gameLogic.startGame()
+                                                
+                                                let currentRecord = GameRecord(playerName: playerNameInput, score: gameLogic.score)
+                                                if let data = try? JSONEncoder().encode(currentRecord) {
+                                                    UserDefaults.standard.set(data, forKey: "currentRecord")
+                                                }
+                                            }
+                                    }
+                                }
                         )
                 )
+                
             }
             .tabItem {
                 Image(systemName: "gamecontroller")
@@ -156,13 +184,19 @@ struct GameView: View {
                             .font(.callout)
                             .bold()
                         
-                        List(gameLogic.gameRecords) { record in
-                            HStack {
-                                Text(record.playerName)
-                                Spacer()
-                                Text("\(record.score) очков")
+                        List {
+                            ForEach(gameRecords) { record in
+                                HStack {
+                                    Text(record.playerName)
+                                    Spacer()
+                                    Text("\(record.score) очков")
+                                }
                             }
+                            .onDelete(perform: swipeOnDelete)
                         }
+                        .listStyle(PlainListStyle())
+                        .background(Color.clear)
+                        
                         Spacer()
                         
                     }
@@ -177,16 +211,50 @@ struct GameView: View {
             .foregroundColor(.black)
         }
         .foregroundColor(.black)
+        
+        
         .onAppear {
             gameLogic.generateColors()
+            if let data = UserDefaults.standard.data(forKey: "gameRecords") {
+                do {
+                    gameRecords = try JSONDecoder().decode([GameRecord].self, from: data)
+                } catch {
+                    print("Error decoding game records: \(error)")
+                }
+            }
         }
     }
 }
 
+struct InfoView: View {
+    var body: some View {
+        RadialGradient(
+            gradient: Gradient(colors: [Color.blue, Color.purple]),
+            center: .center,
+            startRadius: 0,
+            endRadius: 500
+        )
+        .edgesIgnoringSafeArea(.all)
+        .overlay(
+            VStack {
+                Text("Инструкция")
+            }
+                .navigationBarTitle("Information")
+        )
+    }
+}
 
-
-
+private extension GameView {
+    
+    func swipeOnDelete(at offsets: IndexSet) {
+        gameRecords.remove(atOffsets: offsets)
+        let gameLogic = GameLogic()
+        gameLogic.saveGameRecords()
+    }
+}
 
 #Preview {
     GameView()
 }
+
+
