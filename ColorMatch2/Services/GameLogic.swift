@@ -103,17 +103,22 @@ class GameLogic: ObservableObject {
         showGameOverAlert = true
     }
     func playerTapped(index: Int) {
-        if selectedIndices.count == 2 {
+        if selectedIndices.count > 0 {
+            selectedIndices.append(index)
+            
             guard selectedIndices[0] != selectedIndices[1] else {
                 selectedIndices.removeAll()
                 return
             }
+            
             if colors[selectedIndices[0]] == colors[selectedIndices[1]] {
                 print("correct")
             } else {
                 print("incorrect")
             }
+            
             selectedIndices.removeAll()
+            
         } else {
             selectedIndices.append(index)
         }

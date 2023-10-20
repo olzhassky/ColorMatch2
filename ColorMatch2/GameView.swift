@@ -240,8 +240,8 @@ private extension GameView {
     }
 }
 
-#Preview {
-    GameView()
-}
+//#Preview {
+//    GameView()
+//}
 
 
