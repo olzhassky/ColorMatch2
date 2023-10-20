@@ -36,8 +36,7 @@ struct GameView: View {
     @ObservedObject var gameLogic = GameLogic()
     @State var isTapped = false
     
-    @State var firstSelectedColor: Color? = nil
-    @State var secondSelectedColor: Color? = nil
+
     
     @State private var playerNameInput: String = ""
     @State private var isNameInputViewPresented: Bool = false
@@ -83,26 +82,19 @@ struct GameView: View {
                         LazyVGrid(columns: columns) {
                             ForEach(0 ..< gameLogic.colors.count, id: \.self) { index in
                                 Button(action: {
-                                    if firstSelectedColor == nil {
-                                        firstSelectedColor = gameLogic.colors[index]
-                                    } else if secondSelectedColor == nil {
-                                        secondSelectedColor = gameLogic.colors[index]
-                                        if firstSelectedColor == secondSelectedColor {
-                                            gameLogic.score += 1
-                                            if gameLogic.score >= gameLogic.currentRound {
-                                                gameLogic.startNextRound()
-                                            }
-                                        } else {
-                                            gameLogic.showGameOverAlert = true
-                                        }
-                                        firstSelectedColor = nil
-                                        secondSelectedColor = nil
-                                    }
+                                    gameLogic.playerTapped(index: index)
                                 }, label: {
                                     
                                     Spacer()
                                 })
                                 .buttonStyle(ColorButtonStyle(backgroundColor: gameLogic.colors[index]))
+                                .overlay {
+                                    if gameLogic.selectedIndices.contains(index) {
+                                        Image(systemName: "checkmark.circle")
+                                            .foregroundColor(.white)
+                                            .font(.system(size: 48))
+                                    }
+                                }
                             }
                         }
                         .alert(isPresented: $gameLogic.showGameOverAlert) {

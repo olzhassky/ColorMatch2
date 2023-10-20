@@ -26,6 +26,8 @@ class GameRecord: Identifiable, Codable {
 class GameLogic: ObservableObject {
     // для таблицы с рекордами
     @Published var gameRecords: [GameRecord] = []
+
+    @Published var selectedIndices: [Int] = []
     
     @Published var colors: [Color] = []
     @Published var score = 0
@@ -67,11 +69,10 @@ class GameLogic: ObservableObject {
         timeRemaining = 30
         generateColors()
         startTimer()
-        
     }
     func startNextRound() {
         stopTimer()
-        currentRound += 1
+        score += 1
         generateColors()
         timeRemaining = 30
         startTimer()
@@ -99,6 +100,31 @@ class GameLogic: ObservableObject {
     
     func presentGameOver() {
         showGameOverAlert = true
+    }
+    func playerTapped(index: Int) {
+        if selectedIndices.count > 0 {
+            selectedIndices.append(index)
+            
+            guard selectedIndices[0] != selectedIndices[1] else {
+                selectedIndices.removeAll()
+                return
+            }
+            
+            if colors[selectedIndices[0]] == colors[selectedIndices[1]] {
+                print("correct")
+
+                    startNextRound()
+                
+            } else {
+                showGameOverAlert = true
+                print("incorrect")
+            }
+            
+            selectedIndices.removeAll()
+            
+        } else {
+            selectedIndices.append(index)
+        }
     }
     
     //    для таблицы с рекордами
