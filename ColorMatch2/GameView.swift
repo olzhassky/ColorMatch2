@@ -43,14 +43,9 @@ struct GameView: View {
     @State private var isNameInputViewPresented: Bool = false
     
     @State private var isInfoViewPresented = false
-    
-    @State private var isSheetPresented = false
     //    переменные для анимации
-    @State private var ellipseOneWidth: CGFloat = 400
-    @State private var ellipseOneHeight: CGFloat = 300
-    @State private var ellipseTwoWidth: CGFloat = 0
-    @State private var ellipseTwoHeight: CGFloat = 0
-    
+    @State private var ellipseOneWidth: CGFloat = 200
+    @State private var ellipseOneHeight: CGFloat = 200
     
     let columns: [GridItem] = [
         GridItem(.fixed(70), spacing: nil, alignment: nil),
@@ -73,7 +68,6 @@ struct GameView: View {
                 .edgesIgnoringSafeArea(.all)
                 .overlay(
                     VStack {
-                        
                         Text(" \(gameLogic.timeRemaining) sec.")
                             .font(.system(size: 46))
                             .bold()
@@ -84,6 +78,7 @@ struct GameView: View {
                         
                         Text("Score: \(gameLogic.score)")
                             .font(.system(size: 26))
+                        
                         
                         LazyVGrid(columns: columns) {
                             ForEach(0 ..< gameLogic.colors.count, id: \.self) { index in
@@ -110,22 +105,16 @@ struct GameView: View {
                                 .buttonStyle(ColorButtonStyle(backgroundColor: gameLogic.colors[index]))
                             }
                         }
-                        //                        пока не нужный код с алертом рестарта
-                        //                        .alert(isPresented: $gameLogic.showRestartAlert) {
-                        //                            Alert(title: Text("Вы уверены?"), message: Text("Начать игру заново"), primaryButton: .destructive(Text("Да")) {
-                        //                            }, secondaryButton: .cancel())
-                        //                        }
-                        //                        .alert(isPresented: $gameLogic.showGameOverAlert) {
-                        //                            Alert(title: Text("Вы проиграли"),
-                        //                                  message: Text("Игра начнется заново!"),
-                        //                                  dismissButton: .destructive(Text("Окей")) {
-                        //                                gameLogic.startGame()
-                        //                            })
-                        //                        }
+                        .alert(isPresented: $gameLogic.showGameOverAlert) {
+                            Alert(title: Text("Вы проиграли"),
+                                  message: Text("Игра начнется заново!"),
+                                  dismissButton: .destructive(Text("Окей")) {
+                                gameLogic.startGame()
+                            })
+                        }
                         
-                        
+                        Spacer()
                     }
-                    
                         .navigationBarTitle("ColorMatch", displayMode: .inline)
                     
                         .navigationBarItems(
@@ -136,6 +125,7 @@ struct GameView: View {
                                             .font(.title)
                                     }
                                 },
+                            
                             trailing:
                                 HStack {
                                     Button {
@@ -210,9 +200,6 @@ struct GameView: View {
             }
             .foregroundColor(.black)
         }
-        .foregroundColor(.black)
-        
-        
         .onAppear {
             gameLogic.generateColors()
             if let data = UserDefaults.standard.data(forKey: "gameRecords") {
