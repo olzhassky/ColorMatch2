@@ -27,7 +27,7 @@ class GameLogic: ObservableObject {
     // для таблицы с рекордами
     @Published var gameRecords: [GameRecord] = []
 
-    private var selectedIndices: [Int] = []
+    @Published var selectedIndices: [Int] = []
     
     @Published var colors: [Color] = []
     @Published var score = 0
@@ -72,7 +72,7 @@ class GameLogic: ObservableObject {
     }
     func startNextRound() {
         stopTimer()
-        score += 1 
+        score += 1
         generateColors()
         timeRemaining = 30
         startTimer()

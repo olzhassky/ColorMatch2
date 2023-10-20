@@ -83,26 +83,18 @@ struct GameView: View {
                             ForEach(0 ..< gameLogic.colors.count, id: \.self) { index in
                                 Button(action: {
                                     gameLogic.playerTapped(index: index)
-//                                    if firstSelectedColor == nil {
-//                                        firstSelectedColor = gameLogic.colors[index]
-//                                    } else if secondSelectedColor == nil {
-//                                        secondSelectedColor = gameLogic.colors[index]
-//                                        if firstSelectedColor == secondSelectedColor {
-//                                            gameLogic.score += 1
-//                                            if gameLogic.score >= gameLogic.currentRound {
-//                                                gameLogic.startNextRound()
-//                                            }
-//                                        } else {
-//                                            gameLogic.showGameOverAlert = true
-//                                        }
-//                                        firstSelectedColor = nil
-//                                        secondSelectedColor = nil
-//                                    }
                                 }, label: {
                                     
                                     Spacer()
                                 })
                                 .buttonStyle(ColorButtonStyle(backgroundColor: gameLogic.colors[index]))
+                                .overlay {
+                                    if gameLogic.selectedIndices.contains(index) {
+                                        Image(systemName: "checkmark.circle")
+                                            .foregroundColor(.white)
+                                            .font(.system(size: 48))
+                                    }
+                                }
                             }
                         }
                         .alert(isPresented: $gameLogic.showGameOverAlert) {
@@ -240,8 +232,8 @@ private extension GameView {
     }
 }
 
-//#Preview {
-//    GameView()
-//}
+#Preview {
+    GameView()
+}
 
 
