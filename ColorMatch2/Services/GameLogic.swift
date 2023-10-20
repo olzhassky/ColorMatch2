@@ -77,6 +77,7 @@ class GameLogic: ObservableObject {
         startTimer()
         
     }
+    
     func startTimer() {
         guard timer == nil else { return }
         
