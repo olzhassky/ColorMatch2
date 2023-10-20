@@ -69,11 +69,10 @@ class GameLogic: ObservableObject {
         timeRemaining = 30
         generateColors()
         startTimer()
-        
     }
     func startNextRound() {
         stopTimer()
-        currentRound += 1
+        score += 1 
         generateColors()
         timeRemaining = 30
         startTimer()
@@ -113,7 +112,11 @@ class GameLogic: ObservableObject {
             
             if colors[selectedIndices[0]] == colors[selectedIndices[1]] {
                 print("correct")
+
+                    startNextRound()
+                
             } else {
+                showGameOverAlert = true
                 print("incorrect")
             }
             
