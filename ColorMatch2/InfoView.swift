@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+
 //настройки игры будут
 struct InfoView: View {
     var body: some View {

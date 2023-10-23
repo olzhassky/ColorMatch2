@@ -8,18 +8,14 @@
 import SwiftUI
 import Combine
 
+
+
 struct GameView: View {
     @EnvironmentObject var variables: Variables
+    @StateObject var gameSettings = GameSettings()
     
     @State var gameRecords: [GameRecord] = []
     @ObservedObject var gameLogic = GameLogic()
-    
-    let columns: [GridItem] = [
-        GridItem(.fixed(70), spacing: nil, alignment: nil),
-        GridItem(.fixed(70), spacing: nil, alignment: nil),
-        GridItem(.fixed(70), spacing: nil, alignment: nil),
-        GridItem(.fixed(70), spacing: nil, alignment: nil)
-    ]
     
     var body: some View {
         TabView {
@@ -40,7 +36,7 @@ struct GameView: View {
                             .font(.system(size: 26))
                         
                         
-                        LazyVGrid(columns: columns) {
+                        LazyVGrid(columns: gameSettings.columns) {
                             ForEach(0 ..< gameLogic.colors.count, id: \.self) { index in
                                 Button(action: {
                                     gameLogic.playerTapped(index: index)
