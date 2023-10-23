@@ -10,16 +10,17 @@ import Combine
 
 struct GameView: View {
     @EnvironmentObject var variables: Variables
-    
+    @StateObject var gameSettings = GameSettings()
     @State var gameRecords: [GameRecord] = []
     @ObservedObject var gameLogic = GameLogic()
     
-    let columns: [GridItem] = [
-        GridItem(.fixed(70), spacing: nil, alignment: nil),
-        GridItem(.fixed(70), spacing: nil, alignment: nil),
-        GridItem(.fixed(70), spacing: nil, alignment: nil),
-        GridItem(.fixed(70), spacing: nil, alignment: nil)
-    ]
+    private let gridItem = GridItem(.fixed(70), spacing: nil, alignment: nil)
+    
+    var columns: [GridItem] = []
+    
+    init() {
+        columns = Array.init(repeating: gridItem, count: gameSettings.columns)
+    }
     
     var body: some View {
         TabView {

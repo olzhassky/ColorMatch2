@@ -21,6 +21,7 @@
 		CA0C66152AD128C700DB99EA /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0C66142AD128C700DB99EA /* ButtonStyles.swift */; };
 		CA0C66192AD1293500DB99EA /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0C66182AD1293500DB99EA /* GameLogic.swift */; };
 		CA49AA162AE6ACBF00087D16 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA49AA152AE6ACBF00087D16 /* Montserrat-Bold.ttf */; };
+		CA49AA192AE6B49B00087D16 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA49AA182AE6B49B00087D16 /* GameSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		CA0C66182AD1293500DB99EA /* GameLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
 		CA49AA152AE6ACBF00087D16 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		CA49AA172AE6ACE700087D16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		CA49AA182AE6B49B00087D16 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				CA0C66182AD1293500DB99EA /* GameLogic.swift */,
+				CA49AA182AE6B49B00087D16 /* GameSettings.swift */,
 				3F8F7CFE2AE55A0400B02E41 /* Variables.swift */,
 				3F8F7D052AE64C9800B02E41 /* Extencions.swift */,
 			);
@@ -210,6 +213,7 @@
 				CA0C66152AD128C700DB99EA /* ButtonStyles.swift in Sources */,
 				3F8F7D012AE63E0B00B02E41 /* ScreenStyle.swift in Sources */,
 				3F8F7D082AE64FFE00B02E41 /* ScoreView.swift in Sources */,
+				CA49AA192AE6B49B00087D16 /* GameSettings.swift in Sources */,
 				3F8F7D062AE64C9800B02E41 /* Extencions.swift in Sources */,
 				3F8F7CFA2AE535F200B02E41 /* InfoView.swift in Sources */,
 				638D71272AC8793400515187 /* ColorMatch2App.swift in Sources */,
