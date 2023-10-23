@@ -13,10 +13,16 @@ struct NameInputView: View {
     
     @Binding var isPresented: Bool
     @Binding var playerNameInput: String
+    @FocusState var isFocused: NameField?
+    
+    enum NameField {
+        case playerName
+    }
     
     var body: some View {
         VStack {
             TextField("Your Name", text: $playerNameInput)
+                .focused($isFocused, equals: .playerName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             
@@ -26,6 +32,11 @@ struct NameInputView: View {
                 
             }
             .padding()
+            .presentationDetents([.height(125)])
+    
+        }
+        .onAppear{
+            isFocused = .playerName
         }
     }
 }
@@ -123,7 +134,7 @@ struct GameView: View {
                                     Button {
                                         isNameInputViewPresented = true
                                     } label: {
-                                        Image(systemName: "play.fill")
+                                        Image(systemName: "play.circle")
                                             .font(.title)
                                     }
                                     .sheet(isPresented: $isNameInputViewPresented) {
@@ -232,8 +243,8 @@ private extension GameView {
     }
 }
 
-#Preview {
-    GameView()
-}
+//#Preview {
+//    GameView()
+//}
 
 
