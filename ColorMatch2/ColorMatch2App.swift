@@ -10,11 +10,14 @@ import SwiftData
 
 @main
 struct ColorMatch2App: App {
+    @StateObject private var variables = Variables()
+    
     var body: some Scene {
         WindowGroup {
             GameView()
                 .preferredColorScheme(.light)
                 .accentColor(.white)
+                .environmentObject(variables)
         }
     }
 }

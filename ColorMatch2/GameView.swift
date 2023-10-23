@@ -8,54 +8,11 @@
 import SwiftUI
 import Combine
 
-
-struct NameInputView: View {
-    
-    @Binding var isPresented: Bool
-    @Binding var playerNameInput: String
-    @FocusState var isFocused: NameField?
-    
-    enum NameField {
-        case playerName
-    }
-    
-    var body: some View {
-        VStack {
-            TextField("Your Name", text: $playerNameInput)
-                .focused($isFocused, equals: .playerName)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-            
-            Button("OK") {
-                isPresented = false
-                UserDefaults.standard.set(playerNameInput, forKey: "playerName")
-                
-            }
-            .padding()
-            .presentationDetents([.height(125)])
-    
-        }
-        .onAppear{
-            isFocused = .playerName
-        }
-    }
-}
-
 struct GameView: View {
-    @State private var gameRecords: [GameRecord] = []
+    @EnvironmentObject var variables: Variables
     
+    @State var gameRecords: [GameRecord] = []
     @ObservedObject var gameLogic = GameLogic()
-    @State var isTapped = false
-    
-
-    
-    @State private var playerNameInput: String = ""
-    @State private var isNameInputViewPresented: Bool = false
-    
-    @State private var isInfoViewPresented = false
-    //    переменные для анимации
-    @State private var ellipseOneWidth: CGFloat = 200
-    @State private var ellipseOneHeight: CGFloat = 200
     
     let columns: [GridItem] = [
         GridItem(.fixed(70), spacing: nil, alignment: nil),
@@ -65,23 +22,16 @@ struct GameView: View {
     ]
     
     var body: some View {
-        
         TabView {
             // Вкладка 1
             NavigationView {
-                RadialGradient(
-                    gradient: Gradient(colors: [Color.blue, Color.purple]),
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 500
-                )
-                .edgesIgnoringSafeArea(.all)
-                .overlay(
+                ScreenStyleGradient.radialGradient{
                     VStack {
+                        //    переопределение свой метод для анимации
                         Text(" \(gameLogic.timeRemaining) sec.")
                             .font(.system(size: 46))
                             .bold()
-                            .frame(width: ellipseOneWidth, height: ellipseOneHeight,
+                            .frame(width: variables.ellipseOneWidth, height: variables.ellipseOneHeight,
                                    alignment: .center)
                             .animation(Animation
                                 .easeInOut(duration: 1.5))
@@ -95,7 +45,6 @@ struct GameView: View {
                                 Button(action: {
                                     gameLogic.playerTapped(index: index)
                                 }, label: {
-                                    
                                     Spacer()
                                 })
                                 .buttonStyle(ColorButtonStyle(backgroundColor: gameLogic.colors[index]))
@@ -118,128 +67,34 @@ struct GameView: View {
                         
                         Spacer()
                     }
-                        .navigationBarTitle("ColorMatch", displayMode: .inline)
+                    //       поменять текст тайтла
+                    .navigationBarTitle("ColorMatch", displayMode: .inline)
                     
-                        .navigationBarItems(
-                            leading:
-                                HStack {
-                                    NavigationLink(destination: InfoView()) {
-                                        Image(systemName: "info.circle")
-                                            .font(.title)
-                                    }
-                                },
-                            
-                            trailing:
-                                HStack {
-                                    Button {
-                                        isNameInputViewPresented = true
-                                    } label: {
-                                        Image(systemName: "play.circle")
-                                            .font(.title)
-                                    }
-                                    .sheet(isPresented: $isNameInputViewPresented) {
-                                        NameInputView(isPresented: $isNameInputViewPresented, playerNameInput: $playerNameInput)
-                                            .onDisappear {
-                                                let record = GameRecord(playerName: playerNameInput, score: gameLogic.score)
-                                                gameRecords.append(record)
-                                                gameLogic.startGame()
-                                                
-                                                let currentRecord = GameRecord(playerName: playerNameInput, score: gameLogic.score)
-                                                if let data = try? JSONEncoder().encode(currentRecord) {
-                                                    UserDefaults.standard.set(data, forKey: "currentRecord")
-                                                }
-                                            }
-                                    }
-                                }
-                        )
-                )
-                
+                    .navigationBarItems(
+                        trailing: NavigationViewItems(isNameInputViewPresented: $variables.isNameInputViewPresented,
+                                                      playerNameInput: $variables.playerNameInput,
+                                                      gameRecords: gameLogic)
+                    )
+                }
             }
+            
             .tabItem {
                 Image(systemName: "gamecontroller")
                 Text("Game")
             }
             
-            // Вкладка 2
-            NavigationView {
-                RadialGradient(
-                    gradient: Gradient(colors: [Color.blue, Color.purple]),
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 500
-                )
-                .edgesIgnoringSafeArea(.all)
-                .overlay(
-                    VStack {
-                        Spacer()
-                        
-                        Text("Табличка с рекордами")
-                            .font(.callout)
-                            .bold()
-                        
-                        List {
-                            ForEach(gameRecords) { record in
-                                HStack {
-                                    Text(record.playerName)
-                                    Spacer()
-                                    Text("\(record.score) очков")
-                                }
-                            }
-                            .onDelete(perform: swipeOnDelete)
-                        }
-                        .listStyle(PlainListStyle())
-                        .background(Color.clear)
-                        
-                        Spacer()
-                        
-                    }
-                        .navigationBarTitle("Score", displayMode: .inline)
-                )
-            }
-            .tabItem {
-                Image(systemName: "flag.2.crossed.fill")
-                Text("Score")
-                
-            }
-            .foregroundColor(.black)
+            ScoreView(gameRecords: $gameRecords, gameLogic: gameLogic)
+                .tabItem {
+                    Image(systemName: "flag.2.crossed.fill")
+                    Text("Score")
+                }
+            
+                .foregroundColor(.black)
         }
         .onAppear {
             gameLogic.generateColors()
-            if let data = UserDefaults.standard.data(forKey: "gameRecords") {
-                do {
-                    gameRecords = try JSONDecoder().decode([GameRecord].self, from: data)
-                } catch {
-                    print("Error decoding game records: \(error)")
-                }
-            }
+            
         }
-    }
-}
-
-struct InfoView: View {
-    var body: some View {
-        RadialGradient(
-            gradient: Gradient(colors: [Color.blue, Color.purple]),
-            center: .center,
-            startRadius: 0,
-            endRadius: 500
-        )
-        .edgesIgnoringSafeArea(.all)
-        .overlay(
-            VStack {
-                Text("Инструкция")
-            }
-                .navigationBarTitle("Information")
-        )
-    }
-}
-
-private extension GameView {
-    
-    func swipeOnDelete(at offsets: IndexSet) {
-        gameRecords.remove(atOffsets: offsets)
-        let gameLogic = GameLogic()
-        gameLogic.saveGameRecords()
     }
 }
 
