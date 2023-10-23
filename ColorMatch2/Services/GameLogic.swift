@@ -24,6 +24,7 @@ class GameRecord: Identifiable, Codable {
 
 
 class GameLogic: ObservableObject {
+    @StateObject var gameSettings = GameSettings()
     // для таблицы с рекордами
     @Published var gameRecords: [GameRecord] = []
     
@@ -47,7 +48,7 @@ class GameLogic: ObservableObject {
     
     func generateColors() {
         var colors: [Color] = []
-        for _ in 0 ..< 14 {
+        for _ in 0 ..< (gameSettings.columns * gameSettings.rows) - 2 {
             let randomColor = Color (
                 red: Double.random(in: 0...1),
                 green: Double.random(in: 0...1),
@@ -65,6 +66,7 @@ class GameLogic: ObservableObject {
         
         self.colors = colors.shuffled()
     }
+    
     func startGame() {
         score = 0
         timeRemaining = 30
