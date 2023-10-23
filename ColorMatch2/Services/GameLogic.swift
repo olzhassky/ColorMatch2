@@ -31,7 +31,8 @@ class GameLogic: ObservableObject {
     
     @Published var colors: [Color] = []
     @Published var score = 0
-    @Published var timeRemaining = 0
+    @Published var timeRemaining = 30
+    var currentTime = 30
     @Published  var showRestartAlert = false
     @Published var showGameOverAlert = false
     
@@ -74,9 +75,13 @@ class GameLogic: ObservableObject {
         stopTimer()
         score += 1
         generateColors()
-        timeRemaining = 30
+        if currentTime > 10 {
+            currentTime -= 5
+        } else {
+            currentTime = 10
+        }
+        timeRemaining = currentTime
         startTimer()
-        
     }
     
     func startTimer() {
