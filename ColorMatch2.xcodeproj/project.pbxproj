@@ -20,6 +20,7 @@
 		638D712E2AC8793600515187 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 638D712D2AC8793600515187 /* Preview Assets.xcassets */; };
 		CA0C66152AD128C700DB99EA /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0C66142AD128C700DB99EA /* ButtonStyles.swift */; };
 		CA0C66192AD1293500DB99EA /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0C66182AD1293500DB99EA /* GameLogic.swift */; };
+		CA49AA162AE6ACBF00087D16 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA49AA152AE6ACBF00087D16 /* Montserrat-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,8 @@
 		638D712D2AC8793600515187 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CA0C66142AD128C700DB99EA /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		CA0C66182AD1293500DB99EA /* GameLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
+		CA49AA152AE6ACBF00087D16 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		CA49AA172AE6ACE700087D16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,11 +80,13 @@
 		638D71252AC8793400515187 /* ColorMatch2 */ = {
 			isa = PBXGroup;
 			children = (
+				CA49AA172AE6ACE700087D16 /* Info.plist */,
 				638D71262AC8793400515187 /* ColorMatch2App.swift */,
 				CA0C661A2AD1294300DB99EA /* Services */,
 				CA0C66172AD128FD00DB99EA /* Views */,
 				CA0C66162AD128F500DB99EA /* Styles */,
 				638D712A2AC8793600515187 /* Assets.xcassets */,
+				CA49AA152AE6ACBF00087D16 /* Montserrat-Bold.ttf */,
 				638D712C2AC8793600515187 /* Preview Content */,
 			);
 			path = ColorMatch2;
@@ -186,6 +191,7 @@
 			files = (
 				638D712E2AC8793600515187 /* Preview Assets.xcassets in Resources */,
 				638D712B2AC8793600515187 /* Assets.xcassets in Resources */,
+				CA49AA162AE6ACBF00087D16 /* Montserrat-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +348,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"ColorMatch2/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ColorMatch2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -371,6 +378,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"ColorMatch2/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ColorMatch2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

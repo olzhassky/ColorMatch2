@@ -29,12 +29,12 @@ struct GameView: View {
                     VStack {
                         //    переопределение свой метод для анимации
                         Text(" \(gameLogic.timeRemaining) sec.")
-                            .font(.system(size: 46))
+                            .monospacedDigit()
+                            .transition(.scale.combined(with: .slide))
+                            .font(.custom("Montserrat-Bold", size: 46))
                             .bold()
-                            .frame(width: variables.ellipseOneWidth, height: variables.ellipseOneHeight,
-                                   alignment: .center)
-                            .animation(Animation
-                                .easeInOut(duration: 1.5))
+                            .frame(width: variables.ellipseOneWidth, height: variables.ellipseOneHeight, alignment: .center)
+                            .animation(.easeInOut(duration: 0.5), value: gameLogic.timeRemaining)
                         
                         Text("Score: \(gameLogic.score)")
                             .font(.system(size: 26))
