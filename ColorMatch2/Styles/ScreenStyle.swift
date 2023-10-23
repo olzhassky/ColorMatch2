@@ -5,4 +5,18 @@
 //  Created by Akerke on 23.10.2023.
 //
 
-import Foundation
+import SwiftUI
+
+struct ScreenStyleGradient {
+    static func radialGradient<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        RadialGradient(
+            gradient: Gradient(colors: [Color.blue, Color.purple]),
+            center: .center,
+            startRadius: 0,
+            endRadius: 500
+        )
+        .edgesIgnoringSafeArea(.all)
+        .overlay(content())
+    }
+}
+
