@@ -24,23 +24,21 @@ class GameRecord: Identifiable, Codable {
 
 
 class GameLogic: ObservableObject {
-    @StateObject var gameSettings = GameSettings()
+  
     // для таблицы с рекордами
     @Published var gameRecords: [GameRecord] = []
-    
+ 
     @Published var selectedIndices: [Int] = []
     
     @Published var colors: [Color] = []
     @Published var score = 0
-    @Published var timeRemaining = 30
-    var currentTime = 30
-    @Published  var showRestartAlert = false
+    
     @Published var showGameOverAlert = false
     
-    @Published var isGameStart = false
-    
-    @Published var currentRound: Int = 1
+
+    @Published var timeRemaining = 30
     var timer: Timer?
+    var currentTime = 30
     
     init() {
         generateColors()
@@ -48,7 +46,7 @@ class GameLogic: ObservableObject {
     
     func generateColors() {
         var colors: [Color] = []
-        for _ in 0 ..< (gameSettings.columns * gameSettings.rows) - 2 {
+        for _ in 0 ..< (GameSettings.shared.columns * GameSettings.shared.rows) - 2 {
             let randomColor = Color (
                 red: Double.random(in: 0...1),
                 green: Double.random(in: 0...1),

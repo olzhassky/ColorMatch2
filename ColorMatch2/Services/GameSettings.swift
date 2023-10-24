@@ -8,6 +8,15 @@
 import SwiftUI
 
 class GameSettings: ObservableObject {
-    @Published var columns: Int = 3
-    @Published var rows: Int = 3
+    static let shared = GameSettings()
+    @Published  var columns: Int
+    @Published var rows: Int
+
+   private init() {
+        self.columns = 5
+       self.rows = 5
+       
+    }
 }
+
+

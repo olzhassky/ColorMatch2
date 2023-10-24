@@ -10,7 +10,7 @@ import Combine
 
 struct GameView: View {
     @EnvironmentObject var variables: Variables
-    @StateObject var gameSettings = GameSettings()
+   
     @State var gameRecords: [GameRecord] = []
     @ObservedObject var gameLogic = GameLogic()
     
@@ -19,7 +19,7 @@ struct GameView: View {
     var columns: [GridItem] = []
     
     init() {
-        columns = Array.init(repeating: gridItem, count: gameSettings.columns)
+        columns = Array.init(repeating: gridItem, count: GameSettings.shared.columns)
     }
     
     var body: some View {
@@ -99,8 +99,8 @@ struct GameView: View {
     }
 }
 
-//#Preview {
-//    GameView()
-//}
+#Preview {
+    GameView()
+}
 
 
