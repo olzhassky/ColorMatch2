@@ -11,11 +11,27 @@ import Combine
 
 
 struct GameView: View {
-    @EnvironmentObject var variables: Variables
     @StateObject var gameSettings = GameSettings()
-    
     @State var gameRecords: [GameRecord] = []
     @ObservedObject var gameLogic = GameLogic()
+    
+    @State var playerNameInput: String = ""
+    @State  var isNameInputViewPresented: Bool = false
+    
+    @State  var isInfoViewPresented = false
+    @State  var ellipseOneWidth: CGFloat = 200
+    @State  var ellipseOneHeight: CGFloat = 200
+
+    
+    private let gridItem = GridItem(.fixed(70), spacing: nil, alignment: nil)
+    
+    var columns: [GridItem] = []
+    
+    
+    
+    init() {
+        columns = Array.init(repeating: gridItem, count: gameSettings.columns)
+    }
     
     var body: some View {
         TabView {
@@ -25,18 +41,18 @@ struct GameView: View {
                     VStack {
                         //    переопределение свой метод для анимации
                         Text(" \(gameLogic.timeRemaining) sec.")
-                            .font(.system(size: 46))
+                            .monospacedDigit()
+                            .transition(.scale.combined(with: .slide))
+                            .font(.custom("Montserrat-Bold", size: 46))
                             .bold()
-                            .frame(width: variables.ellipseOneWidth, height: variables.ellipseOneHeight,
-                                   alignment: .center)
-                            .animation(Animation
-                                .easeInOut(duration: 1.5))
+                            .frame(width: ellipseOneWidth, height: ellipseOneHeight, alignment: .center)
+                            .animation(.easeInOut(duration: 0.5), value: gameLogic.timeRemaining)
                         
                         Text("Score: \(gameLogic.score)")
                             .font(.system(size: 26))
                         
                         
-                        LazyVGrid(columns: gameSettings.columns) {
+                        LazyVGrid(columns: columns) {
                             ForEach(0 ..< gameLogic.colors.count, id: \.self) { index in
                                 Button(action: {
                                     gameLogic.playerTapped(index: index)
@@ -67,8 +83,8 @@ struct GameView: View {
                     .navigationBarTitle("ColorMatch", displayMode: .inline)
                     
                     .navigationBarItems(
-                        trailing: NavigationViewItems(isNameInputViewPresented: $variables.isNameInputViewPresented,
-                                                      playerNameInput: $variables.playerNameInput,
+                        trailing: NavigationViewItems(isNameInputViewPresented: $isNameInputViewPresented,
+                                                      playerNameInput: $playerNameInput,
                                                       gameRecords: gameLogic)
                     )
                 }

@@ -17,7 +17,6 @@ struct ColorMatch2App: App {
             GameView()
                 .preferredColorScheme(.light)
                 .accentColor(.white)
-                .environmentObject(variables)
         }
     }
 }

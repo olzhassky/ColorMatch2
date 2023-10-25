@@ -24,14 +24,16 @@ class GameRecord: Identifiable, Codable {
 
 
 class GameLogic: ObservableObject {
+    @StateObject var gameSettings = GameSettings()
     // для таблицы с рекордами
     @Published var gameRecords: [GameRecord] = []
-
+    
     @Published var selectedIndices: [Int] = []
     
     @Published var colors: [Color] = []
     @Published var score = 0
-    @Published var timeRemaining = 0
+    @Published var timeRemaining = 30
+    var currentTime = 30
     @Published  var showRestartAlert = false
     @Published var showGameOverAlert = false
     
@@ -46,7 +48,7 @@ class GameLogic: ObservableObject {
     
     func generateColors() {
         var colors: [Color] = []
-        for _ in 0 ..< 14 {
+        for _ in 0 ..< (gameSettings.columns * gameSettings.rows) - 2 {
             let randomColor = Color (
                 red: Double.random(in: 0...1),
                 green: Double.random(in: 0...1),
@@ -64,6 +66,7 @@ class GameLogic: ObservableObject {
         
         self.colors = colors.shuffled()
     }
+    
     func startGame() {
         score = 0
         timeRemaining = 30
@@ -74,9 +77,13 @@ class GameLogic: ObservableObject {
         stopTimer()
         score += 1
         generateColors()
-        timeRemaining = 30
+        if currentTime > 10 {
+            currentTime -= 5
+        } else {
+            currentTime = 10
+        }
+        timeRemaining = currentTime
         startTimer()
-        
     }
     
     func startTimer() {
@@ -87,7 +94,6 @@ class GameLogic: ObservableObject {
             if self.timeRemaining > 0 {
                 self.timeRemaining -= 1
             } else {
-                self.stopTimer()
                 self.presentGameOver()
             }
         }
@@ -99,8 +105,10 @@ class GameLogic: ObservableObject {
     }
     
     func presentGameOver() {
+        self.stopTimer()
         showGameOverAlert = true
     }
+    
     func playerTapped(index: Int) {
         if selectedIndices.count > 0 {
             selectedIndices.append(index)
@@ -111,13 +119,9 @@ class GameLogic: ObservableObject {
             }
             
             if colors[selectedIndices[0]] == colors[selectedIndices[1]] {
-                print("correct")
-
-                    startNextRound()
-                
+                startNextRound()
             } else {
-                showGameOverAlert = true
-                print("incorrect")
+                presentGameOver()
             }
             
             selectedIndices.removeAll()

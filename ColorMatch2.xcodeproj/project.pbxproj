@@ -9,24 +9,23 @@
 /* Begin PBXBuildFile section */
 		3F8F7CFA2AE535F200B02E41 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8F7CF92AE535F200B02E41 /* InfoView.swift */; };
 		3F8F7CFC2AE5363900B02E41 /* NameInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8F7CFB2AE5363900B02E41 /* NameInputView.swift */; };
-		3F8F7CFF2AE55A0400B02E41 /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8F7CFE2AE55A0400B02E41 /* Variables.swift */; };
 		3F8F7D012AE63E0B00B02E41 /* ScreenStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8F7D002AE63E0B00B02E41 /* ScreenStyle.swift */; };
 		3F8F7D032AE6424800B02E41 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8F7D022AE6424800B02E41 /* NavigationView.swift */; };
 		3F8F7D062AE64C9800B02E41 /* Extencions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8F7D052AE64C9800B02E41 /* Extencions.swift */; };
 		3F8F7D082AE64FFE00B02E41 /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8F7D072AE64FFE00B02E41 /* ScoreView.swift */; };
-		3F8F7D0A2AE6B09600B02E41 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8F7D092AE6B09600B02E41 /* GameSettings.swift */; };
 		638D71272AC8793400515187 /* ColorMatch2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638D71262AC8793400515187 /* ColorMatch2App.swift */; };
 		638D71292AC8793400515187 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638D71282AC8793400515187 /* GameView.swift */; };
 		638D712B2AC8793600515187 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 638D712A2AC8793600515187 /* Assets.xcassets */; };
 		638D712E2AC8793600515187 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 638D712D2AC8793600515187 /* Preview Assets.xcassets */; };
 		CA0C66152AD128C700DB99EA /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0C66142AD128C700DB99EA /* ButtonStyles.swift */; };
 		CA0C66192AD1293500DB99EA /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0C66182AD1293500DB99EA /* GameLogic.swift */; };
+		CA49AA162AE6ACBF00087D16 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA49AA152AE6ACBF00087D16 /* Montserrat-Bold.ttf */; };
+		CA49AA192AE6B49B00087D16 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA49AA182AE6B49B00087D16 /* GameSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3F8F7CF92AE535F200B02E41 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		3F8F7CFB2AE5363900B02E41 /* NameInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameInputView.swift; sourceTree = "<group>"; };
-		3F8F7CFE2AE55A0400B02E41 /* Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
 		3F8F7D002AE63E0B00B02E41 /* ScreenStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenStyle.swift; sourceTree = "<group>"; };
 		3F8F7D022AE6424800B02E41 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		3F8F7D052AE64C9800B02E41 /* Extencions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extencions.swift; sourceTree = "<group>"; };
@@ -39,6 +38,9 @@
 		638D712D2AC8793600515187 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CA0C66142AD128C700DB99EA /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		CA0C66182AD1293500DB99EA /* GameLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
+		CA49AA152AE6ACBF00087D16 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		CA49AA172AE6ACE700087D16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		CA49AA182AE6B49B00087D16 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,11 +81,13 @@
 		638D71252AC8793400515187 /* ColorMatch2 */ = {
 			isa = PBXGroup;
 			children = (
+				CA49AA172AE6ACE700087D16 /* Info.plist */,
 				638D71262AC8793400515187 /* ColorMatch2App.swift */,
 				CA0C661A2AD1294300DB99EA /* Services */,
 				CA0C66172AD128FD00DB99EA /* Views */,
 				CA0C66162AD128F500DB99EA /* Styles */,
 				638D712A2AC8793600515187 /* Assets.xcassets */,
+				CA49AA152AE6ACBF00087D16 /* Montserrat-Bold.ttf */,
 				638D712C2AC8793600515187 /* Preview Content */,
 			);
 			path = ColorMatch2;
@@ -122,7 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				CA0C66182AD1293500DB99EA /* GameLogic.swift */,
-				3F8F7CFE2AE55A0400B02E41 /* Variables.swift */,
+				CA49AA182AE6B49B00087D16 /* GameSettings.swift */,
 				3F8F7D052AE64C9800B02E41 /* Extencions.swift */,
 				3F8F7D092AE6B09600B02E41 /* GameSettings.swift */,
 			);
@@ -189,6 +193,7 @@
 			files = (
 				638D712E2AC8793600515187 /* Preview Assets.xcassets in Resources */,
 				638D712B2AC8793600515187 /* Assets.xcassets in Resources */,
+				CA49AA162AE6ACBF00087D16 /* Montserrat-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,13 +206,12 @@
 			files = (
 				638D71292AC8793400515187 /* GameView.swift in Sources */,
 				3F8F7D032AE6424800B02E41 /* NavigationView.swift in Sources */,
-				3F8F7CFF2AE55A0400B02E41 /* Variables.swift in Sources */,
 				CA0C66192AD1293500DB99EA /* GameLogic.swift in Sources */,
 				3F8F7CFC2AE5363900B02E41 /* NameInputView.swift in Sources */,
 				CA0C66152AD128C700DB99EA /* ButtonStyles.swift in Sources */,
 				3F8F7D012AE63E0B00B02E41 /* ScreenStyle.swift in Sources */,
 				3F8F7D082AE64FFE00B02E41 /* ScoreView.swift in Sources */,
-				3F8F7D0A2AE6B09600B02E41 /* GameSettings.swift in Sources */,
+				CA49AA192AE6B49B00087D16 /* GameSettings.swift in Sources */,
 				3F8F7D062AE64C9800B02E41 /* Extencions.swift in Sources */,
 				3F8F7CFA2AE535F200B02E41 /* InfoView.swift in Sources */,
 				638D71272AC8793400515187 /* ColorMatch2App.swift in Sources */,
@@ -346,6 +350,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"ColorMatch2/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ColorMatch2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -375,6 +380,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"ColorMatch2/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ColorMatch2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
