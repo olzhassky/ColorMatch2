@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
-import Combine
+import SwiftData
 
 
 
+@available(iOS 17.0, *)
 struct GameView: View {
+  
+
     @StateObject var gameSettings = GameSettings()
     @State var gameRecords: [GameRecord] = []
     @ObservedObject var gameLogic = GameLogic()
@@ -26,9 +29,6 @@ struct GameView: View {
     private let gridItem = GridItem(.fixed(70), spacing: nil, alignment: nil)
     
     var columns: [GridItem] = []
-    
-    
-    
     init() {
         columns = Array.init(repeating: gridItem, count: gameSettings.columns)
     }

@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
-import Combine
+import SwiftData
 
 // для таблицы с рекордами
-
-class GameRecord: Identifiable, Codable {
-    var id = UUID()
-    var playerName: String
+@Model
+class GameRecord{
+    @Attribute(.unique)  var id = UUID()
+     var playerName: String
     var score: Int
     
     init(id: UUID = UUID(), playerName: String, score: Int) {
@@ -23,6 +23,7 @@ class GameRecord: Identifiable, Codable {
 }
 
 
+@available(iOS 17.0, *)
 class GameLogic: ObservableObject {
     @StateObject var gameSettings = GameSettings()
     // для таблицы с рекордами
@@ -40,6 +41,9 @@ class GameLogic: ObservableObject {
     @Published var isGameStart = false
     
     @Published var currentRound: Int = 1
+    
+    @Environment(\.modelContext) private var modelContext
+
     var timer: Timer?
     
     init() {
@@ -139,14 +143,13 @@ class GameLogic: ObservableObject {
     }
     
     func saveGameRecords() {
-        //            код для сохр рекордов
-        func saveGameRecords() {
-            do {
-                let data = try JSONEncoder().encode(gameRecords)
-                UserDefaults.standard.set(data, forKey: "gameRecords")
-            } catch {
-                print("Error encoding game records: \(error)")
-            }
-        }
     }
+    
+    func submit(playerName: String, score: Int) {
+        let record = GameRecord(playerName: playerName, score: score)
+        modelContext.insert(record)
+       
+        
+    }
+
 }

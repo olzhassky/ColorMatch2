@@ -8,15 +8,17 @@
 import SwiftUI
 import SwiftData
 
+@available(iOS 17.0, *)
 @main
 struct ColorMatch2App: App {
-    @StateObject private var variables = Variables()
+   
     
     var body: some Scene {
         WindowGroup {
             GameView()
                 .preferredColorScheme(.light)
                 .accentColor(.white)
+                .modelContainer(for: GameRecord.self)
         }
     }
 }

@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(iOS 17.0, *)
 struct NavigationViewItems: View {
     @Binding var isNameInputViewPresented: Bool
     @Binding var playerNameInput: String
@@ -28,11 +29,10 @@ struct NavigationViewItems: View {
                         gameRecords.startGame()
 
                         let currentRecord = GameRecord(playerName: playerNameInput, score: gameRecords.score)
-                        if let data = try? JSONEncoder().encode(currentRecord) {
-                            UserDefaults.standard.set(data, forKey: "currentRecord")
+                        
                         }
                     }
             }
         }
     }
-}
+

@@ -6,8 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
+
+@available(iOS 17.0, *)
 struct ScoreView: View {
+    
+    @Environment(\.modelContext) private var modelContext
     @Binding var gameRecords: [GameRecord]
     @ObservedObject var gameLogic: GameLogic
     
@@ -21,26 +26,24 @@ struct ScoreView: View {
                         .font(.callout)
                         .bold()
                     
-                    List {
-                        ForEach(gameRecords) { record in
-                            HStack {
-                                Text(record.playerName)
-                                Spacer()
-                                Text("\(record.score) очков")
-                            }
+                    List(gameRecords) { record in
+                        HStack {
+                            Text(record.playerName)
+                            Spacer()
+                            Text("\(record.score) очков")
                         }
-                        .onDelete(perform: swipeOnDelete)
                     }
-                    .listStyle(PlainListStyle())
-                    .background(Color.clear)
-                    
-                    Spacer()
+                    //                        .onDelete(perform: swipeOnDelete)
                 }
-                .navigationBarTitle("Score", displayMode: .inline)
+                .listStyle(PlainListStyle())
+                .background(Color.clear)
+                
+                Spacer()
             }
+            .navigationBarTitle("Score", displayMode: .inline)
         }
-        .foregroundColor(.black)
+    }
     }
 
-}
+
 

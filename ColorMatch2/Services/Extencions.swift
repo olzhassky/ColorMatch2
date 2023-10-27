@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 17.0, *)
 extension ScoreView {
     func swipeOnDelete(at offsets: IndexSet) {
         gameRecords.remove(atOffsets: offsets)
