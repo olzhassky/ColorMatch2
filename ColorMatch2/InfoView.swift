@@ -9,14 +9,9 @@ import Foundation
 import SwiftUI
 //настройки игры будут
 struct InfoView: View {
-@StateObject var gameLogic = GameLogic()
-    var gridSizeOptions = [
-        (columns: 3, rows: 3),
-        (columns: 4, rows: 4),
-        (columns: 5, rows: 5)
-    ]
-    @State  var selectedGridSize = 1
- 
+    @State var selectedGridSize = GameSettings.shared.selectedGridOption
+    var gridOptions = ["3×3", "4×4", "5×5"]
+    
     var body: some View {
         RadialGradient(
             gradient: Gradient(colors: [Color.red, Color.purple]),
@@ -28,23 +23,33 @@ struct InfoView: View {
         .overlay(
             VStack {
                 Picker("Grid Size", selection: $selectedGridSize) {
-                    ForEach(0..<gridSizeOptions.count, id: \.self) { index in
-                        Text("\(gridSizeOptions[index].columns) x \(gridSizeOptions[index].rows)")
+                    ForEach(gridOptions, id: \.self) { option in
+                        Text(option)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
-    
-                   
-                Button("Okay") {
-                    let selectedSize = gridSizeOptions[selectedGridSize]
-                                    GameSettings.shared.columns = selectedSize.columns
-                                    GameSettings.shared.rows = selectedSize.rows
-                                    gameLogic.generateColors()
-                }
+                
                 Spacer()
-
+                    .frame(height: 25)
+                
+                //                Button("Okay") {
+                //                    GameSettings.shared.columns = Int(String(selectedGridSize.first ?? "3")) ?? 3
+                //                    print(GameSettings.shared.columns)
+                //                }
+                //                .foregroundColor(.pink)
+                //                .buttonStyle(.borderedProminent)
+                
+                Spacer()
+                
             }
                 .navigationBarTitle("Information")
+                .padding([.leading, .trailing], 25)
+                .onAppear {
+                    selectedGridSize = GameSettings.shared.selectedGridOption
+                }
+                .onChange(of: selectedGridSize) {
+                    GameSettings.shared.columns = Int(String(selectedGridSize.first ?? "3")) ?? 3
+                }
         )
     }
 }
