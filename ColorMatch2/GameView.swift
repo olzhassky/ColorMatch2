@@ -10,17 +10,8 @@ import Combine
 
 struct GameView: View {
     @EnvironmentObject var variables: Variables
-    @StateObject var gameSettings = GameSettings()
     @State var gameRecords: [GameRecord] = []
-    @ObservedObject var gameLogic = GameLogic()
-    
-    private let gridItem = GridItem(.fixed(70), spacing: nil, alignment: nil)
-    
-    var columns: [GridItem] = []
-    
-    init() {
-        columns = Array.init(repeating: gridItem, count: gameSettings.columns)
-    }
+    @StateObject var gameLogic = GameLogic()
     
     var body: some View {
         TabView {
@@ -41,7 +32,7 @@ struct GameView: View {
                             .font(.system(size: 26))
                         
                         
-                        LazyVGrid(columns: columns) {
+                        LazyVGrid(columns: GameSettings.shared.gridItems) {
                             ForEach(0 ..< gameLogic.colors.count, id: \.self) { index in
                                 Button(action: {
                                     gameLogic.playerTapped(index: index)
@@ -93,14 +84,16 @@ struct GameView: View {
                 .foregroundColor(.black)
         }
         .onAppear {
-            gameLogic.generateColors()
-            
+            gameLogic.startGame()
+        }
+        .onChange(of: GameSettings.shared.columns) {
+            gameLogic.startGame()
         }
     }
 }
 
-//#Preview {
-//    GameView()
-//}
+#Preview {
+    GameView()
+}
 
 

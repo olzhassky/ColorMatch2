@@ -8,6 +8,20 @@
 import SwiftUI
 
 class GameSettings: ObservableObject {
-    @Published var columns: Int = 3
-    @Published var rows: Int = 3
+    static let shared = GameSettings()
+    
+    private let gridItem = GridItem(.fixed(70), spacing: nil, alignment: nil)
+    var gridItems: [GridItem] = []
+    var selectedGridOption: String { "\(columns)×\(columns)" }
+    
+    @Published var columns: Int {
+        didSet {
+            gridItems = Array.init(repeating: gridItem, count: columns)
+        }
+    }
+    
+    private init() {
+        self.columns = 4
+        gridItems = Array.init(repeating: gridItem, count: columns)
+    }
 }
