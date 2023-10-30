@@ -67,7 +67,8 @@ class GameLogic: ObservableObject {
     func startGame() {
         score = 0
         selectedIndices = []
-        timeRemaining = 30
+        let timeOption = Int(GameTimer.sharedTimer.selectedTimerOption)
+        timeRemaining = timeOption ?? 0
         generateColors()
         startTimer()
     }
@@ -76,12 +77,12 @@ class GameLogic: ObservableObject {
         stopTimer()
         score += 1
         generateColors()
-        if currentTime > 10 {
-            currentTime -= 5
-        } else {
-            currentTime = 10
-        }
-        timeRemaining = currentTime
+//        if currentTime > 10 {
+//            currentTime -= 5
+//        } else {
+//            currentTime = 10
+//        }
+//        timeRemaining = currentTime
         startTimer()
     }
     
