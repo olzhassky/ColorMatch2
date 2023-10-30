@@ -13,7 +13,7 @@ struct InfoView: View {
     var gridOptions = ["3×3", "4×4", "5×5"]
     
     var timerOptions = ["5", "10", "15"]
-    @State var timerPick = GameTimer.sharedTimer.selectedTimerOption
+    @State var timerPick = String(GameTimer.sharedTimer.timer)
     
     var body: some View {
         RadialGradient(
@@ -47,10 +47,14 @@ struct InfoView: View {
                 .padding([.leading, .trailing], 25)
                 .onAppear {
                     selectedGridSize = GameSettings.shared.selectedGridOption
-                    timerPick = GameTimer.sharedTimer.selectedTimerOption
+                    timerPick = String(GameTimer.sharedTimer.timer)
                 }
                 .onChange(of: selectedGridSize) {
                     GameSettings.shared.columns = Int(String(selectedGridSize.first ?? "3")) ?? 3
+                }
+                .onChange(of: timerPick) {
+                    print(timerPick)
+                    GameTimer.sharedTimer.timer = Int(timerPick) ?? 15
                 }
         )
         
