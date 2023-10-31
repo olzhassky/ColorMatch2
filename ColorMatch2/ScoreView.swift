@@ -15,12 +15,6 @@ struct ScoreView: View {
         NavigationView {
             ScreenStyleGradient.radialGradient{
                 VStack {
-                    Spacer()
-                    
-                    Text("Табличка с рекордами")
-                        .font(.callout)
-                        .bold()
-                    
                     List {
                         ForEach(gameRecords) { record in
                             HStack {
