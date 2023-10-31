@@ -18,19 +18,32 @@ struct GameView: View {
             // Вкладка 1
             NavigationView {
                 ScreenStyleGradient.radialGradient{
-                    VStack {
-                        //    переопределение свой метод для анимации
-                        Text(" \(gameLogic.timeRemaining) sec.")
-                            .monospacedDigit()
-                            .transition(.scale.combined(with: .slide))
-                            .font(.custom("Montserrat-Bold", size: 46))
-                            .bold()
-                            .frame(width: variables.ellipseOneWidth, height: variables.ellipseOneHeight, alignment: .center)
-                            .animation(.easeInOut(duration: 0.5), value: gameLogic.timeRemaining)
-                        
-                        Text("Score: \(gameLogic.score)")
-                            .font(.system(size: 26))
-                        
+                    VStack(spacing: 100) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 30)
+                                .fill(Color.black.opacity(0.5))
+                                .frame(width: 200, height: 100)
+                            
+                            Text(" \(gameLogic.timeRemaining) sec.")
+                                .monospacedDigit()
+                                .transition(.scale.combined(with: .slide))
+                                .font(.custom("Icdbold", size: 46))
+                                .bold()
+                                .foregroundColor(.white)
+                                .frame(width: variables.ellipseOneWidth, height: variables.ellipseOneHeight, alignment: .center)
+                                .animation(.easeInOut(duration: 0.5), value: gameLogic.timeRemaining)
+                            
+                            VStack {
+                                Spacer()
+                                Text("Score: \(gameLogic.score)")
+                                    .font(.system(size: 26))
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(Color.black.opacity(0.5))
+                                    .cornerRadius(30)
+                                    .offset(y: 50)
+                            }
+                        }
                         
                         LazyVGrid(columns: GameSettings.shared.gridItems) {
                             ForEach(0 ..< gameLogic.colors.count, id: \.self) { index in
