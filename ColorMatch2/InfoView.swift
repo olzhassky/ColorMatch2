@@ -51,6 +51,7 @@ struct InfoView: View {
                 }
                 .onChange(of: selectedGridSize) {
                     GameSettings.shared.columns = Int(String(selectedGridSize.first ?? "3")) ?? 3
+                    GameTimer.sharedTimer.timer =  Int(GameTimer.sharedTimer.selectedTimerOption) ?? 7
                 }
         )
         
