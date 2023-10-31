@@ -17,11 +17,11 @@ struct GameView: View {
         TabView {
             // Вкладка 1
             NavigationView {
-                ScreenStyleGradient.radialGradient{
+               ScreenStyleGradient.radialGradient{
                     VStack(spacing: 100) {
                         ZStack {
-                            RoundedRectangle(cornerRadius: 30)
-                                .fill(Color.black.opacity(0.5))
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(Color.white.opacity(0.5))
                                 .frame(width: 200, height: 100)
                             
                             Text(" \(gameLogic.timeRemaining) sec.")
@@ -29,7 +29,7 @@ struct GameView: View {
                                 .transition(.scale.combined(with: .slide))
                                 .font(.custom("lcdbold", size: 46))
                                 .bold()
-                                .foregroundColor(.white)
+                               
                                 .frame(width: variables.ellipseOneWidth, height: variables.ellipseOneHeight, alignment: .center)
                                 .animation(.easeInOut(duration: 0.5), value: gameLogic.timeRemaining)
                             
@@ -37,10 +37,10 @@ struct GameView: View {
                                 Spacer()
                                 Text("Score: \(gameLogic.score)")
                                     .font(.system(size: 26))
-                                    .foregroundColor(.white)
+                                  
                                     .padding()
-                                    .background(Color.black.opacity(0.5))
-                                    .cornerRadius(30)
+                                    .background(Color.white.opacity(0.5))
+                                    .cornerRadius(15)
                                     .offset(y: 50)
                             }
                         }
@@ -88,14 +88,14 @@ struct GameView: View {
                 Text("Game")
             }
             
-            ScoreView(gameRecords: $gameRecords, gameLogic: gameLogic)
+            ScoreView(gameLogic: gameLogic)
                 .tabItem {
                     Image(systemName: "flag.2.crossed.fill")
                     Text("Score")
                 }
             
                 .foregroundColor(.black)
-        }
+      }
         .onAppear {
             gameLogic.startGame()
         }
@@ -104,6 +104,8 @@ struct GameView: View {
         }
     }
 }
+
+
 
 #Preview {
     GameView()

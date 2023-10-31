@@ -4,6 +4,7 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>PlaypenSans.ttf</string>
 		<string>lcdbold.ttf</string>
 		<string>Montserrat-Bold.ttf</string>
 	</array>

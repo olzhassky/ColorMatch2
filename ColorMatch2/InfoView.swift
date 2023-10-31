@@ -17,47 +17,71 @@ struct InfoView: View {
     var timerOptions = ["5", "10", "15"]
     @State var timerPick = String(GameTimer.sharedTimer.timer)
     
+    @State private var selectedColor: Color = .lightBlue
+    let colorOptions: [Color] = [.lightBlue, .lightPink, .lightPurple]
+    
     var body: some View {
-        ScreenStyleGradient.radialGradient{
-            VStack {
+            ScreenStyleGradient.radialGradient{
+        VStack {
+            ViewStyleForSmallText.styledView{
                 Text ("Выберите размер ячеек:")
-                    .font(.custom("Icdbold", size: 20))
-                Picker("Grid Size", selection: $selectedGridSize) {
-                    ForEach(gridOptions, id: \.self) { option in
-                        Text(option)
-                    }
+                    .font(.custom("PlaypenSans", size: 20))
+            }.frame(width: 400, height: 50)
+            
+            
+            Picker("Grid Size", selection: $selectedGridSize) {
+                ForEach(gridOptions, id: \.self) { option in
+                    Text(option)
                 }
-                .pickerStyle(SegmentedPickerStyle())
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            
+            ViewStyleForSmallText.styledView{
                 Text("Смысл игры найти два одинаковых цвета за определенное количество времени. Вы можете выбрать количество ячеек и количество времени для одного раунда.")
-                    .font(.custom("Icdbold", size: 20))
+                    .font(.custom("PlaypenSans", size: 20))
+                    .padding()
                 
-                Spacer()
-                    .frame(height: 25)
+            }.frame(width: 400, height: 200)
+            
+            Spacer()
+                .frame(height: 25)
+            ViewStyleForSmallText.styledView{
                 Text("Выберите время прохождения раунда:")
-                    .font(.custom("Icdbold", size: 20))
-                Picker("Timer", selection: $timerPick ) {
-                    ForEach(timerOptions, id: \.self) { timer in
-                        Text(timer)
-                    }
+                .font(.custom("PlaypenSans", size: 20))}
+            .frame(width: 400, height: 50)
+            
+            Picker("Timer", selection: $timerPick ) {
+                ForEach(timerOptions, id: \.self) { timer in
+                    Text(timer)
                 }
-                .pickerStyle(SegmentedPickerStyle())
-                Spacer()
             }
-            .navigationBarTitle("Information")
-            .padding([.leading, .trailing], 25)
-            .onAppear {
-                selectedGridSize = GameSettings.shared.selectedGridOption
-                timerPick = String(GameTimer.sharedTimer.timer)
-            }
-            .onChange(of: selectedGridSize) {
-                GameSettings.shared.columns = Int(String(selectedGridSize.first ?? "3")) ?? 3
-            }
-            .onChange(of: timerPick) {
-                print(timerPick)
-                GameTimer.sharedTimer.timer = Int(timerPick) ?? 15
-            }
-            
-            
+            .pickerStyle(SegmentedPickerStyle())
+            Spacer()
         }
+        .navigationBarTitle("Settings")
+        .padding([.leading, .trailing], 25)
+        .onAppear {
+            selectedGridSize = GameSettings.shared.selectedGridOption
+            timerPick = String(GameTimer.sharedTimer.timer)
+        }
+        .onChange(of: selectedGridSize) {
+            GameSettings.shared.columns = Int(String(selectedGridSize.first ?? "3")) ?? 3
+        }
+        .onChange(of: timerPick) {
+            print(timerPick)
+            GameTimer.sharedTimer.timer = Int(timerPick) ?? 15
+        }
+        Spacer()
+        Picker("Choose a Color", selection: $selectedColor) {
+            ForEach(colorOptions, id: \.self) { color in
+                Text("")
+                    .frame(width: 30, height: 30)
+                    .background(color)
+                    .cornerRadius(8)
+            }
+        }
+        .pickerStyle(SegmentedPickerStyle())
+        .padding()
     }
+}
 }

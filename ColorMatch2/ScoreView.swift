@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ScoreView: View {
-    @Binding var gameRecords: [GameRecord]
+    
     @ObservedObject var gameLogic: GameLogic
     
     var body: some View {
@@ -16,14 +16,14 @@ struct ScoreView: View {
             ScreenStyleGradient.radialGradient{
                 VStack {
                     List {
-                        ForEach(gameRecords) { record in
+                        ForEach(gameLogic.gameRecords) { record in
                             HStack {
                                 Text(record.playerName)
                                 Spacer()
                                 Text("\(record.score) очков")
                             }
                         }
-                        .onDelete(perform: swipeOnDelete)
+                        .onDelete(perform: gameLogic.remove)
                     }
                     .listStyle(PlainListStyle())
                     .background(Color.clear)
@@ -35,6 +35,8 @@ struct ScoreView: View {
         }
         .foregroundColor(.black)
     }
-
 }
+
+
+    
 

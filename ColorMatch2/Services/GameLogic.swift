@@ -26,7 +26,7 @@ class GameRecord: Identifiable, Codable {
 class GameLogic: ObservableObject {
     // для таблицы с рекордами
     @Published var gameRecords: [GameRecord] = []
- 
+    
     @Published var selectedIndices: [Int] = []
     
     @Published var colors: [Color] = []
@@ -137,6 +137,10 @@ class GameLogic: ObservableObject {
         gameRecords.append(record)
         saveGameRecords()
     }
+    
+    func remove(at offsets: IndexSet) {
+         gameRecords.remove(atOffsets: offsets)
+     }
     
     func saveGameRecords() {
         //            код для сохр рекордов
