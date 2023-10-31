@@ -8,7 +8,7 @@ struct NavigationViewItems: View {
     var body: some View {
         HStack {
             NavigationLink(destination: InfoView()) {
-                Image(systemName: "info.circle")
+                Image(systemName: "gear")
                     .font(.title)
             }
 

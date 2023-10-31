@@ -8,17 +8,12 @@
 import Foundation
 
 class GameTimer: ObservableObject {
-   static let sharedTimer = GameTimer()
+    static let sharedTimer = GameTimer()
     @Published var timer: Int
-
-    var selectedTimerOption: String {
-        String(timer)
-       
-    }
     
     private init() {
         self.timer = 10
     }
 }
- 
+
 

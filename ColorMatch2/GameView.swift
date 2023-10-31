@@ -17,20 +17,33 @@ struct GameView: View {
         TabView {
             // Вкладка 1
             NavigationView {
-                ScreenStyleGradient.radialGradient{
-                    VStack {
-                        //    переопределение свой метод для анимации
-                        Text(" \(gameLogic.timeRemaining) sec.")
-                            .monospacedDigit()
-                            .transition(.scale.combined(with: .slide))
-                            .font(.custom("Montserrat-Bold", size: 46))
-                            .bold()
-                            .frame(width: variables.ellipseOneWidth, height: variables.ellipseOneHeight, alignment: .center)
-                            .animation(.easeInOut(duration: 0.5), value: gameLogic.timeRemaining)
-                        
-                        Text("Score: \(gameLogic.score)")
-                            .font(.system(size: 26))
-                        
+               ScreenStyleGradient.radialGradient{
+                    VStack(spacing: 100) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(Color.white.opacity(0.5))
+                                .frame(width: 200, height: 100)
+                            
+                            Text(" \(gameLogic.timeRemaining) sec.")
+                                .monospacedDigit()
+                                .transition(.scale.combined(with: .slide))
+                                .font(.custom("lcdbold", size: 46))
+                                .bold()
+                               
+                                .frame(width: variables.ellipseOneWidth, height: variables.ellipseOneHeight, alignment: .center)
+                                .animation(.easeInOut(duration: 0.5), value: gameLogic.timeRemaining)
+                            
+                            VStack {
+                                Spacer()
+                                Text("Score: \(gameLogic.score)")
+                                    .font(.system(size: 26))
+                                  
+                                    .padding()
+                                    .background(Color.white.opacity(0.5))
+                                    .cornerRadius(15)
+                                    .offset(y: 50)
+                            }
+                        }
                         
                         LazyVGrid(columns: GameSettings.shared.gridItems) {
                             ForEach(0 ..< gameLogic.colors.count, id: \.self) { index in
@@ -75,14 +88,14 @@ struct GameView: View {
                 Text("Game")
             }
             
-            ScoreView(gameRecords: $gameRecords, gameLogic: gameLogic)
+            ScoreView(gameLogic: gameLogic)
                 .tabItem {
                     Image(systemName: "flag.2.crossed.fill")
                     Text("Score")
                 }
             
                 .foregroundColor(.black)
-        }
+      }
         .onAppear {
             gameLogic.startGame()
         }
@@ -91,6 +104,8 @@ struct GameView: View {
         }
     }
 }
+
+
 
 #Preview {
     GameView()
