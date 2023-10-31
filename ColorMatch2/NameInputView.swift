@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct NameInputView: View {
-    
+    @ObservedObject var gameLogic = GameLogic()
     @Binding var isPresented: Bool
     @Binding var playerNameInput: String
     @FocusState var isFocused: NameField?
@@ -27,7 +27,7 @@ struct NameInputView: View {
             
             Button("OK") {
                 isPresented = false
-                UserDefaults.standard.set(playerNameInput, forKey: "playerName")
+                gameLogic.addRecord(playerName: playerNameInput, score: gameLogic.score)
                 
             }
             .padding()

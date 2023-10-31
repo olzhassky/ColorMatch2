@@ -26,7 +26,7 @@ class GameRecord: Identifiable, Codable {
 class GameLogic: ObservableObject {
     // для таблицы с рекордами
     @Published var gameRecords: [GameRecord] = []
- 
+    
     @Published var selectedIndices: [Int] = []
     
     @Published var colors: [Color] = []
@@ -67,7 +67,8 @@ class GameLogic: ObservableObject {
     func startGame() {
         score = 0
         selectedIndices = []
-        timeRemaining = 30
+        let timeOption = GameTimer.sharedTimer.timer
+        timeRemaining = timeOption
         generateColors()
         startTimer()
     }
@@ -76,12 +77,12 @@ class GameLogic: ObservableObject {
         stopTimer()
         score += 1
         generateColors()
-        if currentTime > 10 {
-            currentTime -= 5
-        } else {
-            currentTime = 10
-        }
-        timeRemaining = currentTime
+//        if currentTime > 10 {
+//            currentTime -= 5
+//        } else {
+//            currentTime = 10
+//        }
+//        timeRemaining = currentTime
         startTimer()
     }
     
@@ -136,6 +137,10 @@ class GameLogic: ObservableObject {
         gameRecords.append(record)
         saveGameRecords()
     }
+    
+    func remove(at offsets: IndexSet) {
+         gameRecords.remove(atOffsets: offsets)
+     }
     
     func saveGameRecords() {
         //            код для сохр рекордов
