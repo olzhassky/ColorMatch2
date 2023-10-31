@@ -27,7 +27,7 @@ struct GameView: View {
                             Text(" \(gameLogic.timeRemaining) sec.")
                                 .monospacedDigit()
                                 .transition(.scale.combined(with: .slide))
-                                .font(.custom("Icdbold", size: 46))
+                                .font(.custom("lcdbold", size: 46))
                                 .bold()
                                 .foregroundColor(.white)
                                 .frame(width: variables.ellipseOneWidth, height: variables.ellipseOneHeight, alignment: .center)
