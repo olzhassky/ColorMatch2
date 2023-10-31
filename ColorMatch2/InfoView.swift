@@ -13,14 +13,7 @@ struct InfoView: View {
     var gridOptions = ["3×3", "4×4", "5×5"]
     
     var body: some View {
-        RadialGradient(
-            gradient: Gradient(colors: [Color.red, Color.purple]),
-            center: .center,
-            startRadius: 0,
-            endRadius: 500
-        )
-        .edgesIgnoringSafeArea(.all)
-        .overlay(
+        ScreenStyleGradient.radialGradient{
             VStack {
                 Picker("Grid Size", selection: $selectedGridSize) {
                     ForEach(gridOptions, id: \.self) { option in
@@ -42,14 +35,16 @@ struct InfoView: View {
                 Spacer()
                 
             }
-                .navigationBarTitle("Information")
-                .padding([.leading, .trailing], 25)
-                .onAppear {
-                    selectedGridSize = GameSettings.shared.selectedGridOption
-                }
-                .onChange(of: selectedGridSize) {
-                    GameSettings.shared.columns = Int(String(selectedGridSize.first ?? "3")) ?? 3
-                }
-        )
+            
+            .navigationBarTitle("Information")
+            .padding([.leading, .trailing], 25)
+            .onAppear {
+                selectedGridSize = GameSettings.shared.selectedGridOption
+            }
+            .onChange(of: selectedGridSize) {
+                GameSettings.shared.columns = Int(String(selectedGridSize.first ?? "3")) ?? 3
+            }
+            
+        }
     }
 }

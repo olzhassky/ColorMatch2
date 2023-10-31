@@ -10,7 +10,7 @@ import SwiftUI
 struct ScreenStyleGradient {
     static func radialGradient<Content: View>(@ViewBuilder content: () -> Content) -> some View {
         RadialGradient(
-            gradient: Gradient(colors: [Color.blue, Color.purple]),
+            gradient: Gradient(colors: [Color.color1, Color.color1]),
             center: .center,
             startRadius: 0,
             endRadius: 500
