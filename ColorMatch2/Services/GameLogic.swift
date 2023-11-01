@@ -24,6 +24,7 @@ class GameRecord: Identifiable, Codable {
 
 
 class GameLogic: ObservableObject {
+    
     // для таблицы с рекордами
     @Published var gameRecords: [GameRecord] = []
     
