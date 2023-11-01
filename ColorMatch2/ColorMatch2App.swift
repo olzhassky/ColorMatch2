@@ -18,6 +18,7 @@ struct ColorMatch2App: App {
                 .preferredColorScheme(.light)
                 .accentColor(.white)
                 .environmentObject(variables)
+                .modelContainer(for: GameRecord.self)
         }
     }
 }

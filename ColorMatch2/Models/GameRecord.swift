@@ -1,5 +1,5 @@
 //
-//  GameRecordModel.swift
+//  GameRecord.swift
 //  ColorMatch2
 //
 //  Created by Ярослав on 01.11.2023.

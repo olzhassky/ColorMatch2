@@ -77,8 +77,7 @@ struct GameView: View {
                     
                     .navigationBarItems(
                         trailing: NavigationViewItems(isNameInputViewPresented: $variables.isNameInputViewPresented,
-                                                      playerNameInput: $variables.playerNameInput,
-                                                      gameRecords: gameLogic)
+                                                      playerNameInput: $variables.playerNameInput)
                     )
                 }
             }
@@ -88,7 +87,7 @@ struct GameView: View {
                 Text("Game")
             }
             
-            ScoreView(gameLogic: gameLogic)
+            ScoreView()
                 .tabItem {
                     Image(systemName: "flag.2.crossed.fill")
                     Text("Score")
