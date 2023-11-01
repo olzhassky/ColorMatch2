@@ -19,9 +19,17 @@ class GameSettings: ObservableObject {
             gridItems = Array.init(repeating: gridItem, count: columns)
         }
     }
+    @Published var timer: Int
+
+    var selectedTimerOption: String {
+        String(timer)
+       
+    }
     
     private init() {
+        self.timer = 15
         self.columns = 4
         gridItems = Array.init(repeating: gridItem, count: columns)
+        
     }
 }

@@ -16,3 +16,4 @@ class Variables: ObservableObject{
     @Published  var ellipseOneWidth: CGFloat = 200
     @Published  var ellipseOneHeight: CGFloat = 200
 }
+

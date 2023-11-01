@@ -14,11 +14,12 @@ struct InfoView: View {
     @State var selectedGridSize = GameSettings.shared.selectedGridOption
     var gridOptions = ["3×3", "4×4", "5×5"]
     
-    var timerOptions = ["5", "10", "15"]
-    @State var timerPick = String(GameTimer.sharedTimer.timer)
+    var timerOptions = ["5", "15", "20"]
+    @State var timerPick = String(GameSettings.shared.timer)
     
     @State private var selectedColor: Color = .lightBlue
     let colorOptions: [Color] = [.lightBlue, .lightPink, .lightPurple]
+
     
     var body: some View {
         ScreenStyleGradient.radialGradient{
@@ -62,14 +63,13 @@ struct InfoView: View {
             .padding([.leading, .trailing], 25)
             .onAppear {
                 selectedGridSize = GameSettings.shared.selectedGridOption
-                timerPick = String(GameTimer.sharedTimer.timer)
+                timerPick = String(GameSettings.shared.timer)
             }
             .onChange(of: selectedGridSize) {
                 GameSettings.shared.columns = Int(String(selectedGridSize.first ?? "3")) ?? 3
             }
             .onChange(of: timerPick) {
-                print(timerPick)
-                GameTimer.sharedTimer.timer = Int(timerPick) ?? 15
+                GameSettings.shared.timer = Int(timerPick) ?? 15
             }
             Spacer()
             Picker("Choose a Color", selection: $selectedColor) {
@@ -83,14 +83,12 @@ struct InfoView: View {
                 .padding([.leading, .trailing], 25)
                 .onAppear {
                     selectedGridSize = GameSettings.shared.selectedGridOption
-                    timerPick = GameTimer.sharedTimer.selectedTimerOption
+                    timerPick = GameSettings.shared.selectedTimerOption
                 }
                 .onChange(of: selectedGridSize) {
                     GameSettings.shared.columns = Int(String(selectedGridSize.first ?? "3")) ?? 3
-                    GameTimer.sharedTimer.timer =  Int(GameTimer.sharedTimer.selectedTimerOption) ?? 7
+                    GameSettings.shared.timer =  Int(GameSettings.shared.selectedTimerOption) ?? 7
                 }
-                
-                
             }
         }
     }
