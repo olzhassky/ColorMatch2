@@ -19,9 +19,8 @@ class GameLogic: ObservableObject {
     @Published var showGameOverAlert = false
     
 
-    @Published var timeRemaining = 30
+    @Published var timeRemaining = 15
     var timer: Timer?
-    var currentTime = 30
     
     init() {
         generateColors()
@@ -60,6 +59,8 @@ class GameLogic: ObservableObject {
     func startNextRound() {
         stopTimer()
         score += 1
+        let timeOption = GameSettings.shared.timer
+        timeRemaining = timeOption
         generateColors()
         startTimer()
     }

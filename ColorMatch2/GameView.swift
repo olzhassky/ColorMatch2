@@ -95,9 +95,9 @@ struct GameView: View {
             
                 .foregroundColor(.black)
       }
-        .onAppear {
-            gameLogic.startGame()
-        }
+//        .onAppear {
+//            gameLogic.startGame()
+//        }
         .onChange(of: GameSettings.shared.columns) {
             gameLogic.startGame()
         }
