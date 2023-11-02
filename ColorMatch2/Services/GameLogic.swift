@@ -8,21 +8,6 @@
 import SwiftUI
 import Combine
 
-// для таблицы с рекордами
-
-class GameRecord: Identifiable, Codable {
-    var id = UUID()
-    var playerName: String
-    var score: Int
-    
-    init(id: UUID = UUID(), playerName: String, score: Int) {
-        self.id = id
-        self.playerName = playerName
-        self.score = score
-    }
-}
-
-
 class GameLogic: ObservableObject {
     // для таблицы с рекордами
     @Published var gameRecords: [GameRecord] = []
@@ -121,29 +106,6 @@ class GameLogic: ObservableObject {
             
         } else {
             selectedIndices.append(index)
-        }
-    }
-    
-    //    для таблицы с рекордами
-    func addRecord(playerName: String, score: Int) {
-        let record = GameRecord(playerName: playerName, score: score)
-        gameRecords.append(record)
-        saveGameRecords()
-    }
-    
-    func remove(at offsets: IndexSet) {
-         gameRecords.remove(atOffsets: offsets)
-     }
-    
-    func saveGameRecords() {
-        //            код для сохр рекордов
-        func saveGameRecords() {
-            do {
-                let data = try JSONEncoder().encode(gameRecords)
-                UserDefaults.standard.set(data, forKey: "gameRecords")
-            } catch {
-                print("Error encoding game records: \(error)")
-            }
         }
     }
 }

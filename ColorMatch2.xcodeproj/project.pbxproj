@@ -24,6 +24,7 @@
 		CA0C66192AD1293500DB99EA /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0C66182AD1293500DB99EA /* GameLogic.swift */; };
 		CA49AA162AE6ACBF00087D16 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA49AA152AE6ACBF00087D16 /* Montserrat-Bold.ttf */; };
 		CA49AA192AE6B49B00087D16 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA49AA182AE6B49B00087D16 /* GameSettings.swift */; };
+		CA65DD312AF288AC00E79CA1 /* GameRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65DD302AF288AC00E79CA1 /* GameRecord.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		CA49AA152AE6ACBF00087D16 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		CA49AA172AE6ACE700087D16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CA49AA182AE6B49B00087D16 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
+		CA65DD302AF288AC00E79CA1 /* GameRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRecord.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 			children = (
 				CA49AA172AE6ACE700087D16 /* Info.plist */,
 				638D71262AC8793400515187 /* ColorMatch2App.swift */,
+				CA65DD322AF288B200E79CA1 /* Models */,
 				CA0C661A2AD1294300DB99EA /* Services */,
 				CA0C66172AD128FD00DB99EA /* Views */,
 				CA0C66162AD128F500DB99EA /* Styles */,
@@ -130,6 +133,14 @@
 				3F8F7CFE2AE55A0400B02E41 /* Variables.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		CA65DD322AF288B200E79CA1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CA65DD302AF288AC00E79CA1 /* GameRecord.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,6 +223,7 @@
 				3F8F7CFC2AE5363900B02E41 /* NameInputView.swift in Sources */,
 				3F5BF74C2AF1170F00E14B50 /* ViewStyle .swift in Sources */,
 				CA0C66152AD128C700DB99EA /* ButtonStyles.swift in Sources */,
+				CA65DD312AF288AC00E79CA1 /* GameRecord.swift in Sources */,
 				3F8F7D012AE63E0B00B02E41 /* ScreenStyle.swift in Sources */,
 				3F8F7D082AE64FFE00B02E41 /* ScoreView.swift in Sources */,
 				CA49AA192AE6B49B00087D16 /* GameSettings.swift in Sources */,

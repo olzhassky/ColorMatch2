@@ -3,7 +3,7 @@ import SwiftUI
 struct NavigationViewItems: View {
     @Binding var isNameInputViewPresented: Bool
     @Binding var playerNameInput: String
-    @ObservedObject var gameRecords: GameLogic
+    @Environment(\.modelContext) private var modelContext
 
     var body: some View {
         HStack {
@@ -21,16 +21,12 @@ struct NavigationViewItems: View {
                     .font(.title)
             }
             .sheet(isPresented: $isNameInputViewPresented) {
-                NameInputView(isPresented: $isNameInputViewPresented, playerNameInput: $playerNameInput)
+                NameInputView(isPresented: $isNameInputViewPresented,
+                              playerNameInput: $playerNameInput)
                     .onDisappear {
-                        let record = GameRecord(playerName: playerNameInput, score: gameRecords.score)
-                        gameRecords.gameRecords.append(record)
-                        gameRecords.startGame()
-
-                        let currentRecord = GameRecord(playerName: playerNameInput, score: gameRecords.score)
-                        if let data = try? JSONEncoder().encode(currentRecord) {
-                            UserDefaults.standard.set(data, forKey: "currentRecord")
-                        }
+                        let currentRecord = GameRecord(playerName: playerNameInput,
+                                                       score: 0)
+                        modelContext.insert(currentRecord)
                     }
             }
         }

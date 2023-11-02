@@ -6,24 +6,28 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ScoreView: View {
-    
-    @ObservedObject var gameLogic: GameLogic
+    @Environment(\.modelContext) private var modelContext
+    @Query var gameRecords: [GameRecord]
     
     var body: some View {
         NavigationView {
             ScreenStyleGradient.radialGradient{
                 VStack {
                     List {
-                        ForEach(gameLogic.gameRecords) { record in
+                        ForEach(gameRecords) { record in
                             HStack {
                                 Text(record.playerName)
                                 Spacer()
                                 Text("\(record.score) очков")
                             }
                         }
-                        .onDelete(perform: gameLogic.remove)
+                        .onDelete { indexSet in
+                            let recordToRemove = gameRecords[indexSet.first!]
+                            modelContext.delete(recordToRemove)
+                        }
                     }
                     .listStyle(PlainListStyle())
                     .background(Color.clear)
