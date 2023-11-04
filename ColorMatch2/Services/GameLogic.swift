@@ -17,7 +17,6 @@ class GameLogic: ObservableObject {
     @Published var score = 0
     
     @Published var showGameOverAlert = false
-    
 
     @Published var timeRemaining = 15
     var timer: Timer?

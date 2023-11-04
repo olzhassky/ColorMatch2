@@ -13,6 +13,7 @@ struct NameInputView: View {
     @Binding var isPresented: Bool
     @Binding var playerNameInput: String
     @FocusState var isFocused: NameField?
+    @State var gameLogic = GameLogic()
     
     enum NameField {
         case playerName
@@ -28,6 +29,8 @@ struct NameInputView: View {
             Button("OK") {
                 isPresented = false
                 modelContext.insert(GameRecord(playerName: playerNameInput, score: 0))
+                gameLogic.startGame()
+                
             }
             .padding()
             .presentationDetents([.height(125)])
