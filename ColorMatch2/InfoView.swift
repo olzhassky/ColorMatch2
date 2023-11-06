@@ -24,7 +24,7 @@ struct InfoView: View {
     var body: some View {
         ScreenStyleGradient.radialGradient{
             VStack {
-                ViewStyleForSmallText.styledView{
+                                ViewStyleForSmallText.styledView{
                     Text ("Выберите размер ячеек:")
                         .font(.custom("PlaypenSans", size: 20))
                 }.frame(width: 400, height: 50)
@@ -36,6 +36,23 @@ struct InfoView: View {
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
+                
+                HStack {
+                            Image("3x3")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 130, height: 130)
+                            
+                            Image("4x4")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 130, height: 130)
+                            
+                            Image("5x5")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 130, height: 130)
+                        }
                 
                 ViewStyleForSmallText.styledView{
                     Text("Смысл игры найти два одинаковых цвета за определенное количество времени. Вы можете выбрать количество ячеек и количество времени для одного раунда.")
@@ -71,25 +88,8 @@ struct InfoView: View {
             .onChange(of: timerPick) {
                 GameSettings.shared.timer = Int(timerPick) ?? 15
             }
-            Spacer()
-            Picker("Choose a Color", selection: $selectedColor) {
-                ForEach(colorOptions, id: \.self) { color in
-                    Text("")
-                        .frame(width: 30, height: 30)
-                        .background(color)
-                        .cornerRadius(8)
-                }
-                .navigationBarTitle("Information")
-                .padding([.leading, .trailing], 25)
-                .onAppear {
-                    selectedGridSize = GameSettings.shared.selectedGridOption
-                    timerPick = GameSettings.shared.selectedTimerOption
-                }
-                .onChange(of: selectedGridSize) {
-                    GameSettings.shared.columns = Int(String(selectedGridSize.first ?? "3")) ?? 3
-                    GameSettings.shared.timer =  Int(GameSettings.shared.selectedTimerOption) ?? 7
-                }
-            }
+         
+         
         }
     }
 }

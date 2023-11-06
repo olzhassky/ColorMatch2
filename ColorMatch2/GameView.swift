@@ -17,7 +17,7 @@ struct GameView: View {
         TabView {
             // Вкладка 1
             NavigationView {
-               ScreenStyleGradient.radialGradient{
+                ScreenStyleGradient.radialGradient{
                     VStack(spacing: 100) {
                         ZStack {
                             RoundedRectangle(cornerRadius: 15)
@@ -29,7 +29,7 @@ struct GameView: View {
                                 .transition(.scale.combined(with: .slide))
                                 .font(.custom("lcdbold", size: 46))
                                 .bold()
-                               
+                            
                                 .frame(width: variables.ellipseOneWidth, height: variables.ellipseOneHeight, alignment: .center)
                                 .animation(.easeInOut(duration: 0.5), value: gameLogic.timeRemaining)
                             
@@ -37,7 +37,7 @@ struct GameView: View {
                                 Spacer()
                                 Text("Score: \(gameLogic.score)")
                                     .font(.system(size: 26))
-                                  
+                                
                                     .padding()
                                     .background(Color.white.opacity(0.5))
                                     .cornerRadius(15)
@@ -67,57 +67,58 @@ struct GameView: View {
                                   message: Text("Игра начнется заново!"),
                                   dismissButton: .destructive(Text("Окей")) {
                                 modelContext.insert(GameRecord(playerName: "Guest", score: gameLogic.scoreEnd))
-
+                                
                                 gameLogic.startGame()
-
+                                
                             })
                         }
                         
                         Spacer()
+                        
+                        
+                            .navigationBarItems(
+                                leading:NavigationLink(destination: InfoView()) {
+                                    Image(systemName: "gear")
+                                        .font(.title)
+                                },
+                                trailing: Button {
+                                    gameLogic.startGame()
+                                } label: {
+                                    Image(systemName: "play.circle")
+                                        .font(.title)
+                                }
+                            )
+                        
                     }
-                    //       поменять текст тайтла
-                    .navigationBarTitle("ColorMatch", displayMode: .inline)
-                    
-                    .navigationBarItems(
-                        leading:Button {
-                            gameLogic.startGame()
-                        } label: {
-                            Image(systemName: "play.circle")
-                                .font(.title)
-                        }, trailing:  NavigationLink(destination: InfoView()) {
-                            Image(systemName: "gear")
-                                .font(.title)
-                        }
-                    )
                 }
             }
-            
-            .tabItem {
-                Image(systemName: "gamecontroller")
-                Text("Game")
-            }
-            
-            ScoreView()
                 .tabItem {
-                    Image(systemName: "flag.2.crossed.fill")
-                    Text("Score")
+                    Image(systemName: "gamecontroller")
+                    Text("Game")
                 }
-            
-                .foregroundColor(.black)
-      }
-//        .onAppear {
-//            gameLogic.startGame()
-//        }
-        .onChange(of: GameSettings.shared.columns) {
-            gameLogic.startGame()
+                
+                ScoreView()
+                    .tabItem {
+                        Image(systemName: "flag.2.crossed.fill")
+                        Text("Score")
+                    }
+                
+                    .foregroundColor(.black)
+            }
+            //        .onAppear {
+            //            gameLogic.startGame()
+            //        }
+            .onChange(of: GameSettings.shared.columns) {
+                gameLogic.startGame()
+            }
         }
     }
-}
-
-
-//
-//#Preview {
-//    GameView()
-//}
-
+    //
+    //#Preview {
+    //    GameView()
+    //}
+    
+    
+    
+    
 
