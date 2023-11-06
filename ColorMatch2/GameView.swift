@@ -12,7 +12,7 @@ struct GameView: View {
     @EnvironmentObject var variables: Variables
     @State var gameRecords: [GameRecord] = []
     @StateObject var gameLogic = GameLogic()
-    
+    @Environment(\.modelContext) private var modelContext
     var body: some View {
         TabView {
             // Вкладка 1
@@ -66,7 +66,10 @@ struct GameView: View {
                             Alert(title: Text("Вы проиграли"),
                                   message: Text("Игра начнется заново!"),
                                   dismissButton: .destructive(Text("Окей")) {
+                                modelContext.insert(GameRecord(playerName: "Guest", score: gameLogic.scoreEnd))
+
                                 gameLogic.startGame()
+
                             })
                         }
                         
@@ -76,8 +79,15 @@ struct GameView: View {
                     .navigationBarTitle("ColorMatch", displayMode: .inline)
                     
                     .navigationBarItems(
-                        trailing: NavigationViewItems(isNameInputViewPresented: $variables.isNameInputViewPresented,
-                                                      playerNameInput: $variables.playerNameInput)
+                        leading:Button {
+                            gameLogic.startGame()
+                        } label: {
+                            Image(systemName: "play.circle")
+                                .font(.title)
+                        }, trailing:  NavigationLink(destination: InfoView()) {
+                            Image(systemName: "gear")
+                                .font(.title)
+                        }
                     )
                 }
             }
@@ -105,9 +115,9 @@ struct GameView: View {
 }
 
 
-
-#Preview {
-    GameView()
-}
+//
+//#Preview {
+//    GameView()
+//}
 
 
