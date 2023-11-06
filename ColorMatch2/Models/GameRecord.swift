@@ -11,8 +11,8 @@ import SwiftData
 @Model
 class GameRecord: Identifiable {
     @Attribute(.unique) let id = UUID()
-    let playerName: String
-    let score: Int
+    var playerName: String
+    var score: Int
     
     init(playerName: String, score: Int) {
         self.playerName = playerName

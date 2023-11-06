@@ -11,7 +11,7 @@ import SwiftData
 struct ScoreView: View {
     @Environment(\.modelContext) private var modelContext
     @Query var gameRecords: [GameRecord]
-    
+
     var body: some View {
         NavigationView {
             ScreenStyleGradient.radialGradient{

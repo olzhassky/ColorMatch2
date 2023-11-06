@@ -15,11 +15,12 @@ class GameLogic: ObservableObject {
     
     @Published var colors: [Color] = []
     @Published var score = 0
-    
+    @Published var scoreEnd = 0
     @Published var showGameOverAlert = false
 
     @Published var timeRemaining = 15
     var timer: Timer?
+
     
     init() {
         generateColors()
@@ -57,11 +58,13 @@ class GameLogic: ObservableObject {
     
     func startNextRound() {
         stopTimer()
+        scoreEnd = score + 1
         score += 1
         let timeOption = GameSettings.shared.timer
         timeRemaining = timeOption
         generateColors()
         startTimer()
+        print(scoreEnd)
     }
     
     func startTimer() {
@@ -108,4 +111,11 @@ class GameLogic: ObservableObject {
             selectedIndices.append(index)
         }
     }
+    func updateScore(for playerName: String, with newScore: Int) {
+        if let gameRecord = gameRecords.first(where: { $0.playerName == playerName }) {
+            gameRecord.score = newScore
+        }
+    }
+
+
 }
